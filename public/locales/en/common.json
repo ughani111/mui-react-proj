@@ -1,0 +1,13 @@
+{
+  "headings": {
+    "welcome": "Welcome",
+    "personalInformation": "Personal Information",
+    "visits": "Visits",
+    "health": "Health",
+    "closing": "Closing"
+  },
+  "labels": {
+    "language": "Language",
+    "fillRegistrationForm": "Fill out the registration form"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "headings": {
+    "welcome": "Wilkommen",
+    "personalInformation": "Persönliche Information",
+    "visits": "Aufenthalt",
+    "health": "Gesundheit",
+    "closing": "Abschluss"
+  },
+  "labels": {
+    "language": "Sprache",
+    "fillRegistrationForm": "Anmeldeformular ausfüllen"
+  }
+}

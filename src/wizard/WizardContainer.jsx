@@ -1,11 +1,13 @@
 import WizardTitleHeader from './WizardTitleHeader';
 import StepContainer from './steps/StepContainer';
 
+import steps from './stepsMeta';
+
 function WizardContainer() {
     return (
-        <div className="w-screen h-screen flex flex-col">
+        <div className="w-screen flex flex-col">
             <WizardTitleHeader />
-            <StepContainer  />
+            <StepContainer steps={steps} />
         </div>
     );
 }

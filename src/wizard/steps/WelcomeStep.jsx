@@ -1,14 +1,12 @@
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormLabel from '@material-ui/core/FormLabel';
 import Button from '@material-ui/core/Button';
 import useConfig from '../../hooks';
 import { makeStyles } from '@material-ui/core';
 import { themeColors } from '../../theme';
 import { useState } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     radioGroup: {
@@ -45,6 +43,7 @@ const RadioWithImage = (props) => {
 }
 
 function WelcomeStep({stepState, onSubmit}) {
+    const { t } = useTranslation(['common', 'steps']);
     const [formState, setFormState] = useState(stepState);
     const imagesUrl = useConfig().imagesUrl;
 
@@ -68,31 +67,31 @@ function WelcomeStep({stepState, onSubmit}) {
 
     return (
         <div className="w-full flex flex-col p-12">
-            <p className="font-medium text-sm mb-4 uppercase text-gray-400">Herzlich Wilkommen</p>
+            <p className="font-medium text-sm mb-4 uppercase text-gray-400">
+                <Trans i18nKey="steps:welcome.stepTopic">Herzlich Wilkommen</Trans>
+            </p>
             <p className="font-medium text-4xl text-gray-700 mb-4">
-                Lieber Gast,
+                <Trans i18nKey="steps:welcome.stepGreeting">Lieber Gast</Trans>,
             </p>
             <p className="font-medium text-lg text-gray-500">
-                um Ihren Aufenthalt perfekt auf Ihre Bedürfnisse abzustimmen, sind wir auf Ihre persönlichen Daten
-                angewiesen. Wir verwenden diese Informationen unter strengster Vertraulichkeit. Bitte nehmen Sie sich
-                dafür bewusst ein paar Minuten Zeit.
+                <Trans i18nKey="steps:welcome.stepDescription" />
             </p>
 
             <form className="mt-12 flex flex-col items-center" onSubmit={handleSubmit} noValidate>
                 <div className="flex flex-row justify-between">
                     <RadioGroup classes={{root: classes.radioGroup}} className="w-full flex flex-row justify-between" aria-label="quiz" name="quiz" value={formState.alreadyVisited} onChange={handleRadioChange}>
                         <div className="w-5/12">
-                            <FormControlLabel value={false} onChange={handleRadioChange} control={<RadioWithImage imageUrl={image1Url} label="Ich komme das erste Mal" />}/>
+                            <FormControlLabel value={false} onChange={handleRadioChange} control={<RadioWithImage imageUrl={image1Url} label={t('steps:welcome.firstTime')} />}/>
                         </div>
 
                         <div className="w-5/12">
-                            <FormControlLabel value={true} onChange={handleRadioChange} control={<RadioWithImage imageUrl={image2Url} label="Ich war bereits bei Ihnen" />}/>
+                            <FormControlLabel value={true} onChange={handleRadioChange} control={<RadioWithImage imageUrl={image2Url} label={t('steps:welcome.alreadyVisited')} />}/>
                         </div>
                     </RadioGroup>
                 </div>
 
                 <Button type="submit" classes={{root: classes.submitButton}}>
-                    Anmeldeformular ausfüllen
+                    {t('common:labels.fillRegistrationForm')}
                 </Button>
             </form>
         </div>
