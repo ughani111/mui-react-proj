@@ -4,12 +4,8 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import WelcomeStep from './WelcomeStep';
-import PersonalInformation from './PersonalInformation';
-import Visits from './Visits';
-import Health from './Health';
-import Closing from './Closing';
 import { makeStyles } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,32 +19,11 @@ const initalState = {
     }
 }
 
-const steps = [
-    {
-        label: 'Wilkommen',
-        comp: WelcomeStep
-    },
-    {
-        label: 'Persönliche Information',
-        comp: PersonalInformation
-    },
-    {
-        label: 'Aufenthalt',
-        comp: Visits
-    },
-    {
-        label: 'Gesundheit',
-        comp: Health
-    },
-    {
-        label: 'Abschluss',
-        comp: Closing
-    }
-];
-
 const stepConnector = <ChevronRightIcon className="text-blue-500" />;
 
-function StepCustomLabel({label, stepIndex, active, onClick}) {
+function StepCustomLabel({label, i18nLabel, stepIndex, active, onClick}) {
+    const { t, i18n } = useTranslation(['common', 'steps']);
+
     const onButtonClick = () => {
         onClick(stepIndex);
     };
@@ -57,12 +32,13 @@ function StepCustomLabel({label, stepIndex, active, onClick}) {
 
     return (
         <button className={className} onClick={onButtonClick}>
-            {label}
+            {t(i18nLabel)}
         </button>
     );
 }
 
-export default function StepContainer() {
+export default function StepContainer({ steps }) {
+    const {t, i18n} = useTranslation(['common', 'steps']);
     const [stepsState, setStepsState] = useState(initalState);
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
@@ -130,10 +106,10 @@ export default function StepContainer() {
     return (
         <div>
             <Stepper classes={classes} activeStep={activeStep} connector={stepConnector}>
-                {steps.map(({label, comp}, index) => {
+                {steps.map(({label, i18nLabel, comp}, index) => {
                     return (
                         <Step key={label}>
-                            <StepLabel StepIconProps={{label, stepIndex: index, onClick: gotToStep}} StepIconComponent={StepCustomLabel} />
+                            <StepLabel StepIconProps={{label, i18nLabel, stepIndex: index, onClick: gotToStep}} StepIconComponent={StepCustomLabel} />
                         </Step>
                     );
                 })}

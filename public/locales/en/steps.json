@@ -1,0 +1,15 @@
+{
+  "welcome": {
+    "stepTopic": "Welcome",
+    "stepGreeting": "Dear Guest",
+    "stepDescription": "In order to tailor your stay perfectly to your needs, we depend on your personal data. We use this information with the utmost confidentiality. Please take a few minutes to do this.",
+    "firstTime": "This is my first visit",
+    "alreadyVisited": "I have already visited"
+  },
+  "personalInformation": {
+    "stepTopic": "Your Personal Information",
+    "stepGreeting": "Nice to meet you",
+    "aboutme": "about me",
+    "aboutmeIntrotext": "Introductiontext whats behind requestion this Information"
+  }
+}
