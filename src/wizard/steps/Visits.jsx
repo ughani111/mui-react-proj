@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
     const {imageUrl, label, ...rest} = props;
 
     const classes = useStyles();
-
     return (
         <div className="w-full">
             <img className="w-full h-44 object-cover rounded-md" src={props.imageUrl} />
@@ -67,7 +66,12 @@ const useStyles = makeStyles((theme) => ({
 
 function VisitStep() {
     
-
+    const [ mediaTV,  setMediaTV ] = useState(false);
+    const [ mediaDVD,  setMediaDVD ] = useState(false);
+    const [ talk,  setTalk ] = useState("");
+    const [ talkDetail,  setTalkDetail ] = useState("");
+    
+    console.log()
     const classes = useStyles();
     const {t, i18n} = useTranslation(['translation', 'common']);
 
@@ -96,8 +100,8 @@ function VisitStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    // checked={state.checkedB}
-                                    // onChange={handleChange}
+                                    checked={mediaTV}
+                                    onChange={event => setMediaTV(event.target.value) }
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -109,8 +113,8 @@ function VisitStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    // checked={state.checkedB}
-                                    // onChange={handleChange}
+                                    checked={mediaDVD}
+                                    onChange={event => setMediaDVD(event.target.value) }
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -119,14 +123,14 @@ function VisitStep() {
                         />
                     </div>
                     <div className="my-6 p-4 border border-blue-300 bg-blue-100 rounded">
-                        <h2 className="text-black text-lg"><Trans i18nKey='steps:visitStep.information'></Trans></h2>
-                        <p><Trans i18nKey='steps:visitStep.infotext'></Trans></p>
+                        <h2 className="text-black text-lg"><InfoOutlinedIcon className="text-blue-500" /> <span className="pl-1 text-blue-500"><Trans i18nKey='steps:visitStep.information'></Trans></span></h2>
+                        <p className="ml-9"><Trans i18nKey='steps:visitStep.infotext'></Trans></p>
                     </div>
                     <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading3'></Trans></h2>
                     <p className="font-medium text-sm mb-4 italic text-gray-500"><Trans i18nKey='steps:visitStep.heading3text'></Trans></p>
                     <Grid container xs={12} className='my-12'>
                         <Grid item xs={5}>
-                            <RadioGroup aria-label="gender" name="gender1" /*value={value} onChange={handleChange}*/>
+                            <RadioGroup aria-label="gender" name="gender1" value={talk} onChange={event=> setTalk(event.target.value)}>
                                 <FormControlLabel value="yes" control={<Radio />} label={<Trans i18nKey='steps:visitStep.yes'></Trans>} />
                                 <FormControlLabel value="no" control={<Radio />} label={<Trans i18nKey='steps:visitStep.no'></Trans>} />
                                 <FormControlLabel value="maybe" control={<Radio />} label={<Trans i18nKey='steps:visitStep.maybe'></Trans>} />
@@ -138,6 +142,8 @@ function VisitStep() {
                             id="outlined-multiline-static"
                             label={<Trans i18nKey='steps:visitStep.messageLabel'></Trans>}
                             placeholder={t("steps:personalInformation.messagePlaceholder")}
+                            value={talk}
+                            onChange={event=>talkDetail(event.target.value)}
                             multiline
                             rows={7}
                             fullWidth={true}
@@ -152,6 +158,8 @@ function VisitStep() {
                             <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading4'></Trans></h2>
                             <p className="font-medium text-sm mb-4 italic text-gray-500"><Trans i18nKey='steps:visitStep.heading4text'></Trans></p>
                         </Grid>
+                        {/* TODO */}
+                        {/* value yet to be decided */}
                         <RadioGroup aria-label="gender" name="gender1" /*value={value} onChange={handleChange}*/>
                             <FormControlLabel value="yes" control={<Radio />} label={<Trans i18nKey='steps:visitStep.yes'></Trans>} />
                             <FormControlLabel value="no" control={<Radio />} label={<Trans i18nKey='steps:visitStep.no'></Trans>} />

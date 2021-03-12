@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-
+import countries from './countries.json'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,72 +38,37 @@ const useStyles = makeStyles((theme) => ({
   
 
 function PersonalInformationStep() {
-    const currencies = [
-        {
-          value: 'USD',
-          label: 'dollar',
-        },
-        {
-          value: 'EUR',
-          label: 'euro',
-        },
-        {
-          value: 'BTC',
-          label: 'bitcoin',
-        },
-        {
-          value: 'JPY',
-          label: 'japanese yen',
-        },
-      ];
+    const {t, i18n} = useTranslation(['translation', 'common']);
+    const currencies = [{value: 'male',label: t('section:personalInformation.male'),},{value: 'female',label: t('section:personalInformation.female'),},
+                        {value: 'other',label: t('section:personalInformation.other')}];
     
-      const Titles = [
-        {
-          value: 'mr',
-          label: 'mr.',
-        },
-        {
-          value: 'ms',
-          label: 'ms.',
-        },
-        {
-          value: 'mrs',
-          label: 'mrs.',
-        }
-      ];
-    
-      const Lands = [
-        {
-          value: 'De',
-          label: 'de',
-        },
-        {
-          value: 'US',
-          label: 'us',
-        },
-        {
-          value: 'SP',
-          label: 'sp',
-        }
-      ];
+    const Titles = [{value: 'mr',label: 'mr.',},{value: 'ms',label: 'ms.',},{value: 'mrs',label: 'mrs.',}];
+    const Lands = [{value: 'De',label: 'de',},{value: 'US',label: 'us',},{value: 'SP',label: 'sp',}];
 
     const classes = useStyles();
-    const [currency, setCurrency] = React.useState('EUR');
-    const [title, setTitle] = React.useState('mr');
-    const [land, setLand] = React.useState('de');
-    const {t, i18n} = useTranslation(['translation', 'common']);
-
-    const handleChange = (event) => {
-        setCurrency(event.target.value);
-    };
-
-    const handleTitle = (event) => {
-        setTitle(event.target.value);
-    };
-
-    const handleLand = (event) => {
-        setLand(event.target.value);
-    };
+    const [gender, setGender] = React.useState('');
+    const [title, setTitle] = React.useState('');
+    const [lastName, setLastName] = React.useState('');
+    const [firstName, setFirstName] = React.useState('');
+    const [addressPLZ, setAddressPLZ] = React.useState();
+    const [addressResidency, setAddressResidency] = React.useState('');
+    const [addressStreetNr, setAddressStreetNr] = React.useState('');
+    const [addressStreet, setAddressStreet] = React.useState('');
+    const [contactPhone, setContactPhone] = React.useState('');
+    const [contactPhoneAlt, setContactPhoneAlt] = React.useState('');
+    const [job, setJob] = React.useState('');
+    const [languageGerman, setLanguageGerman] = React.useState(false);
+    const [languageEnglish, setLanguageEnglish] = React.useState('');
+    const [languageFrench, setLanguageFrench] = React.useState('');
+    const [languageSpanish, setLanguageSpanish] = React.useState('');
+    const [languageOther, setLanguageOther] = React.useState('');
+    const [birthDate, setBirthDate] = React.useState('');
+    const [birthPlace, setBirthPlace] = React.useState('');
+    const [nationality, setNationality] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    
+    
+    const [addressCountry, setAddressCountry] = React.useState('de');
 
     return (
         <div className={classes.root}>
@@ -128,8 +93,8 @@ function PersonalInformationStep() {
                                 id="outlined-required"
                                 select
                                 label={<Trans i18nKey='steps:personalInformation.dropdown1Label'></Trans>}
-                                value={currency}
-                                onChange={handleChange}
+                                value={gender}
+                                onChange={(event) => setGender(event.target.value)}
                                 variant="outlined"
                             
                             >
@@ -147,7 +112,7 @@ function PersonalInformationStep() {
                                 select
                                 label={<Trans i18nKey='steps:personalInformation.dropdown2Label'></Trans>}
                                 value={title}
-                                onChange={handleTitle}
+                                onChange={(event) => setTitle(event.target.value)}
                                 variant="outlined"
                         
                             >
@@ -164,6 +129,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
+                        value={firstName}
+                        onChange={event=> setFirstName(event.target.value)}
                         label={<Trans i18nKey='steps:personalInformation.firstnameLabel'></Trans>}
                         placeholder={t("steps:personalInformation.firstnamePlaceholder")}
                         variant="outlined"
@@ -174,6 +141,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
+                        value={lastName}
+                        onChange={event=> setLastName(event.target.value)}
                         label={<Trans i18nKey='steps:personalInformation.lastnameLabel'></Trans>}
                         placeholder={t("steps:personalInformation.lastnamePlaceholder")}
                         variant="outlined"
@@ -184,6 +153,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
+                        value={birthDate}
+                        onChange={event=> setBirthDate(event.target.value)}
                         label={<Trans i18nKey='steps:personalInformation.birthdayLabel'></Trans>}
                         placeholder={t("steps:personalInformation.birthdayPlaceholder")}
                         variant="outlined"
@@ -194,6 +165,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
+                        value={birthPlace}
+                        onChange={event=> setBirthPlace(event.target.value)}
                         label={<Trans i18nKey='steps:personalInformation.birthcityLabel'></Trans>}
                         placeholder={t("steps:personalInformation.birthdayPlaceholder")}
                         variant="outlined"
@@ -204,6 +177,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
+                        value={job}
+                        onChange={event=> setJob(event.target.value)}
                         label={<Trans i18nKey='steps:personalInformation.workLabel'></Trans>}
                         placeholder={t("steps:personalInformation.workPlaceholder")}
                         variant="outlined"
@@ -225,6 +200,8 @@ function PersonalInformationStep() {
                                 <TextField
                                     className={classes.input}
                                     id="outlined-required"
+                                    value={addressStreet}
+                                    onChange={event=> setAddressStreet(event.target.value)}
                                     label={<Trans i18nKey='steps:personalInformation.streetLabel'></Trans>}
                                     placeholder={t("steps:personalInformation.streetPlaceholder")}
                                     variant="outlined"
@@ -236,6 +213,8 @@ function PersonalInformationStep() {
                                 <TextField
                                     className={classes.input}
                                     id="outlined-required"
+                                    value={addressStreetNr}
+                                    onChange={event=> setAddressStreetNr(event.target.value)}
                                     label={<Trans i18nKey='steps:personalInformation.numberLabel'></Trans>}
                                     placeholder={t("steps:personalInformation.numberPlaceholder")}
                                     variant="outlined"
@@ -250,6 +229,8 @@ function PersonalInformationStep() {
                                 <TextField
                                     className={classes.input}
                                     id="outlined-required"
+                                    value={addressPLZ}
+                                    onChange={event=> setAddressPLZ(event.target.value)}
                                     label={<Trans i18nKey='steps:personalInformation.postLabel'></Trans>}
                                     placeholder={t("steps:personalInformation.postPlaceholder")}
                                     variant="outlined"
@@ -261,6 +242,8 @@ function PersonalInformationStep() {
                                 <TextField
                                     className={classes.input}
                                     id="outlined-required"
+                                    value={addressResidency}
+                                    onChange={event=> setAddressResidency(event.target.value)}
                                     label={<Trans i18nKey='steps:personalInformation.citylivingLabel'></Trans>}
                                     placeholder={t("steps:personalInformation.citylivingPlaceholder")}
                                     variant="outlined"
@@ -273,17 +256,19 @@ function PersonalInformationStep() {
                         <TextField
                             className={classes.select}
                             id="outlined-required"
+                            value={addressCountry}
+                            onChange={event=> setAddressCountry(event.target.value)}
                             select
                             label={<Trans i18nKey='steps:personalInformation.countryLabel'></Trans>}
                             placeholder={t("steps:personalInformation.countryPlaceholder")}
-                            value={land}
-                            onChange={handleLand}
+                            value={addressCountry}
+                            onChange={(event) => setAddressCountry(event.target.value)}
                             variant="outlined"
                     
                         >
-                        {Lands.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                        {countries.map((option, i) => (
+                            <MenuItem key={i} value={option.code}>
+                            {option.name}
                             </MenuItem>
                         ))}
                         </TextField>
@@ -293,6 +278,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
+                        value={nationality}
+                        onChange={event=> setNationality(event.target.value)}
                         label={<Trans i18nKey='steps:personalInformation.nationalityLabel'></Trans>}
                         placeholder={t("steps:personalInformation.nationalityPlaceholder")}
                         variant="outlined"
@@ -303,6 +290,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
+                        value={email}
+                        onChange={event=> setEmail(event.target.value)}
                         label={<Trans i18nKey='steps:personalInformation.emailLabel'></Trans>}
                         placeholder={t("steps:personalInformation.emailPlaceholder")}
                         variant="outlined"
@@ -313,6 +302,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
+                        value={contactPhone}
+                        onChange={event=> setContactPhone(event.target.value)}
                         label={<Trans i18nKey='steps:personalInformation.mobileLabel'></Trans>}
                         placeholder={t("steps:personalInformation.mobileLabel")}
                         variant="outlined"
@@ -335,8 +326,8 @@ function PersonalInformationStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                // checked={state.checkedB}
-                                // onChange={handleChange}
+                                    checked={languageGerman}
+                                    onChange={()=>setLanguageGerman(!languageGerman)}
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -348,8 +339,8 @@ function PersonalInformationStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                // checked={state.checkedB}
-                                // onChange={handleChange}
+                                    checked={languageEnglish}
+                                    onChange={()=>setLanguageEnglish(!languageEnglish)}
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -361,8 +352,8 @@ function PersonalInformationStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    // checked={state.checkedB}
-                                    // onChange={handleChange}
+                                    checked={languageFrench}
+                                    onChange={()=>setLanguageFrench(!languageFrench)}
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -374,8 +365,8 @@ function PersonalInformationStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    // checked={state.checkedB}
-                                    // onChange={handleChange}
+                                    checked={languageSpanish}
+                                    onChange={()=>setLanguageSpanish(!languageSpanish)}
                                     name="checkedB"
                                     color="primary"
                                 />

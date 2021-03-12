@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -47,6 +47,11 @@ const useStyles = makeStyles((theme) => ({
 function Closing() {
     const classes = useStyles();
     const {t, i18n} = useTranslation(['translation', 'common']);
+
+    const [ legalAGB, setAGB ] =  useState(false);
+    const [ legalPrivacy, setPrivacy ] =  useState(false);
+    const [ legalMarketing, setMarketing ] =  useState(false);
+    const [ legalPicture, setPicture ] =  useState(false);
 
     return (
         <div className={classes.root}>
@@ -134,6 +139,9 @@ function Closing() {
                 />
             </div>
             <div>
+                <h2 className="font-medium my-3 mt-8 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:closingStep.heading3Label'></Trans></h2>
+            </div>
+            <div>
                 <Grid className="divide-y divide-grey-500 space-y-6">
                     <Grid container className="pt-6">
                         <Grid xs={11}>
@@ -141,6 +149,8 @@ function Closing() {
                         </Grid>
                         <Grid xs={1} container  justify="flex-end">
                             <Switch
+                                value={legalAGB}
+                                onChange={()=> {setAGB(!legalAGB)}}
                                 color="default"
                                 inputProps={{ 'aria-label': 'checkbox with default color' }}
                             />
@@ -152,6 +162,8 @@ function Closing() {
                         </Grid>
                         <Grid xs={1} container  justify="flex-end">
                             <Switch
+                                value={legalPrivacy}
+                                onChange={()=> {setPrivacy(!legalPrivacy)}}
                                 color="default"
                                 inputProps={{ 'aria-label': 'checkbox with default color' }}
                             />
@@ -163,6 +175,8 @@ function Closing() {
                         </Grid>
                         <Grid xs={1} container  justify="flex-end">
                             <Switch
+                                value={legalMarketing}
+                                onChange={()=> {setMarketing(!legalMarketing)}}
                                 color="default"
                                 inputProps={{ 'aria-label': 'checkbox with default color' }}
                             />
@@ -174,6 +188,8 @@ function Closing() {
                         </Grid>
                         <Grid xs={1} container  justify="flex-end">
                             <Switch
+                                value={legalPicture}
+                                onChange={()=> {setPicture(!legalPicture)}}
                                 color="default"
                                 inputProps={{ 'aria-label': 'checkbox with default color' }}
                             />
