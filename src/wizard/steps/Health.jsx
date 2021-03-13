@@ -38,12 +38,56 @@ const useStyles = makeStyles((theme) => ({
   
   }));
 
-  
 
-function HealthStep() {
-    
-    
+  const extractReasons = (stepState) => {
+    return { 
+        reasonPrevention: stepState.resonPrevention, 
+        reasonRegeneration: stepState.reasonRegeneration, 
+        reasonWeight: stepState.reasonWeight,
+        reasonSmoke: stepState.reasonSmoke,
+        reasonAcute: stepState.reasonAcute,
+        reasonAcuteDetail: stepState.reasonAcuteDetail,
+        reasonChronic: stepState.reasonChronic,
+        reasonLocomotive: stepState.reasonLocomotive,
+        reasonLocomotiveDetail: stepState.reasonLocomotiveDetail,
+        reasonDigestive: stepState.reasonDigestive
+    }
+   }
 
+   const extractExclusion = (stepState) => {
+    return { 
+        exclusionDiabetes: stepState.exclusionDiabetes, 
+        exclusionCancer: stepState.exclusionCancer, 
+        exclusionDrugs: stepState.exclusionDrugs,
+        exclusionEatingDis: stepState.exclusionEatingDis
+    }
+   }
+
+   const extractDisabilities = (stepState) => {
+    return { 
+        disabilityFood: stepState.disabilityFood, 
+        disabilityFoodDetail: stepState.disabilityFoodDetail, 
+        disabilityMedAllergy: stepState.disabilityMedAllergy,
+        disabilityMedAllergyDetail: stepState.disabilityMedAllergyDetail,
+        disabilityLocomotion: stepState.disabilityLocomotion,
+        disabilityLocomotionDetail: stepState.disabilityLocomotionDetail,
+        disabilityHelp: stepState.disabilityHelp,
+        disabilityHelpDetail: stepState.disabilityHelpDetail
+    }
+   }
+
+   const extractGeneralInfo = (stepState) => {
+    return { 
+        title: "", 
+        land: "", 
+        weight: "",
+        height: "",
+        medicationGeneral: stepState.medicationGeneral
+    }
+   }
+
+
+function HealthStep({stepState, onSubmit}) {
     const classes = useStyles();
     const [drugs, addDrugs] = React.useState([{
         index: Math.random(),
@@ -53,8 +97,8 @@ function HealthStep() {
         dateOfPublish: "",
         price: ""
     }]);
-    const [title, setTitle] = React.useState('mr');
-    const [land, setLand] = React.useState('de');
+
+
     const {t, i18n} = useTranslation(['translation', 'common']);
 
     const heightUnits = [{value: 'cm',label: 'cm',}, {value: 'inch',label: 'inch',},{value: 'm',label: 'm',}];
@@ -66,39 +110,10 @@ function HealthStep() {
         
 
 
-
-    const [resonPrevention, setResonPrevention] = useState(false);
-    const [reasonRegeneration, setReasonRegeneration] = useState(false);
-    const [reasonWeight, setReasonWeight] = useState(false);
-    const [reasonSmoke, setReasonSmoke] = useState(false);
-    const [reasonAcute, setReasonAcute] = useState(false);
-    const [reasonAcuteDetail, setReasonAcuteDetail] = useState("");
-    const [reasonChronic, setReasonChronic] = useState(false);
-    const [reasonLocomotive, setReasonLokomotive] = useState(false);
-    const [reasonLocomotiveDetail, setReasonLocomotiveDetail] = useState("");
-    const [reasonDigestive, setReasonDigestive] = useState(false);
-    const [exclusionDiabetes, setExclusionDiabetes] = useState(false);
-    const [exclusionCancer, setExclusionCancer] = useState(false);
-    const [exclusionDrugs, setExclusionDrugs] = useState(false);
-    const [exclusionEatingDis, setExclusionEatingDis] = useState(false);
-    const [medicationGeneral, setMedicationGeneral] = useState(false);
-
-    const [disabilityFood, setDisabilityFood] = useState(false);
-    const [disabilityFoodDetail, setDisabilityFoodDetail] = useState("");
-    const [disabilityMedAllergy, setDisabilityMedAllergy] = useState(false);
-    const [disabilityMedAllergyDetail, setDisabilityMedAllergyDetail] = useState("");
-    const [disabilityLocomotion, setDisabilityLocomotion] = useState(false);
-    const [disabilityLocomotionDetail, setDisabilityLocomotionDetail] = useState("");
-    const [disabilityHelp, setDisabilityHelp] = useState(false);
-    const [disabilityHelpDetail, setDisabilityHelpDetail] = useState("");
-
-    const [weight, setWeight] = useState();
-    const [height, setHeight] = useState();
-    
-    const formSubmit = form => {
-    
-        console.log(resonPrevention)
-    }
+    const [generalInfo, setGeneralInfo] = useState(extractGeneralInfo(stepState));
+    const [reasons, setReasons] = useState(extractReasons(stepState));
+    const [exclusions, setExclusions] = useState(extractExclusion(stepState));
+    const [disabilities, setDisabilities] = useState(extractDisabilities(stepState));
 
     const addnewdrug = () => {
         const newElement = {}
@@ -121,10 +136,16 @@ function HealthStep() {
         console.log("after new drug added", drugs);
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const formState = {...disabilities, ...reasons, ...exclusions, ...generalInfo}
+        onSubmit(formState);
+    }
 
     return (
         <div className={classes.root}>
-            <form action="#" noValidate>
+            <form action="#" onSubmit={handleSubmit} noValidate>
             <Grid container spacing={3}>
                 <Grid item className={classes.paper}>
                     <p className="font-medium text-sm mb-4 uppercase text-gray-400"><Trans i18nKey='steps:healthStep.stepTopic'></Trans></p>
@@ -143,8 +164,8 @@ function HealthStep() {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                value={resonPrevention}
-                                onChange={()=> setResonPrevention(!resonPrevention)}
+                                value={reasons.reasonPrevention}
+                                onChange={()=> setReasons({...reasons, reasonPrevention: !reasons.reasonPrevention})}
                                 name="checkedB"
                                 color="primary"
                             />
@@ -156,8 +177,8 @@ function HealthStep() {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                value={reasonRegeneration}
-                                onChange={()=> setReasonRegeneration(!reasonRegeneration)}
+                                value={reasons.reasonRegeneration}
+                                onChange={()=> setReasons({...reasons, reasonRegeneration: !reasons.reasonRegeneration})}
                                 name="checkedB"
                                 color="primary"
                             />
@@ -169,8 +190,8 @@ function HealthStep() {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                value={reasonWeight}
-                                onChange={()=> setReasonWeight(!reasonWeight)}
+                                value={reasons.reasonWeight}
+                                onChange={()=> setReasons({...reasons, reasonWeight: !reasons.reasonWeight})}
                                 name="checkedB"
                                 color="primary"
                             />
@@ -182,8 +203,8 @@ function HealthStep() {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                value={reasonSmoke}
-                                onChange={()=> setReasonSmoke(!reasonSmoke)}
+                                value={reasons.reasonSmoke}
+                                onChange={()=> setReasons({...reasons, reasonSmoke: !reasons.reasonSmoke})}
                                 name="checkedB"
                                 color="primary"
                             />
@@ -195,8 +216,8 @@ function HealthStep() {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                value={reasonAcute}
-                                onChange={()=> setReasonAcute(!reasonAcute)}
+                                value={reasons.reasonAcute}
+                                onChange={()=> setReasons({...reasons, reasonAcute: !reasons.reasonAcute})}
                                 name="checkedB"
                                 color="primary"
                             />
@@ -205,7 +226,7 @@ function HealthStep() {
                     />
                 </div>
                 { 
-                    reasonAcute && 
+                    reasons.reasonAcute && 
                     (
                     <div>
                         <Grid item xs={6}>
@@ -213,8 +234,8 @@ function HealthStep() {
                                 id="outlined-multiline-static"
                                 label={<Trans i18nKey='steps:healthStep.h2check5label1'></Trans>}
                                 placeholder={t("steps:healthStep.h2check5placeholder1")}
-                                value={reasonAcuteDetail}
-                                onChange={(event)=> setReasonAcuteDetail(event.target.value)}
+                                value={reasons.reasonAcuteDetail}
+                                onChange={()=> setReasons({...reasons, reasonAcuteDetail: !reasons.reasonAcuteDetail})}
                                 fullWidth={true}
                                 variant="outlined"
                                 />  
@@ -226,8 +247,8 @@ function HealthStep() {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                value={reasonChronic}
-                                onChange={()=> setReasonChronic(!reasonChronic)}
+                                value={reasons.reasonChronic}
+                                onChange={()=> setReasons({...reasons, reasonChronic: !reasons.reasonChronic})}
                                 name="checkedB"
                                 color="primary"
                             />
@@ -239,8 +260,8 @@ function HealthStep() {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                value={reasonLocomotive}
-                                onChange={()=> setReasonLokomotive(!reasonLocomotive)}
+                                value={reasons.reasonLocomotive}
+                                onChange={()=> setReasons({...reasons, reasonLocomotive: !reasons.reasonLocomotive})}
                                 name="checkedB"
                                 color="primary"
                             />
@@ -249,7 +270,7 @@ function HealthStep() {
                     />
                 </div>
                 { 
-                    reasonLocomotive && 
+                    reasons.reasonLocomotive && 
                     (
                     <div>
                         <Grid item xs={6}>
@@ -257,8 +278,8 @@ function HealthStep() {
                                 id="outlined-multiline-static"
                                 label={<Trans i18nKey='steps:healthStep.h2check5input1'></Trans>}
                                 placeholder={t("steps:healthStep.h2check5input1placeholder")}
-                                value={reasonLocomotiveDetail}
-                                onChange={(event)=> setReasonLocomotiveDetail(event.target.value)}
+                                value={reasons.reasonLocomotiveDetail}
+                                onChange={(event)=> setReasons({...reasons, reasonLocomotiveDetail: event.target.value})}
                                 fullWidth={true}
                                 variant="outlined"
                                 />  
@@ -270,8 +291,8 @@ function HealthStep() {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                value={reasonDigestive}
-                                onChange={()=> setReasonDigestive(!reasonDigestive)}
+                                value={reasons.reasonDigestive}
+                                onChange={()=> setReasons({...reasons, reasonDigestive: !reasons.reasonDigestive})}
                                 name="checkedB"
                                 color="primary"
                             />
@@ -307,8 +328,8 @@ function HealthStep() {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        value={exclusionDiabetes}
-                                        onChange={()=> setExclusionDiabetes(!exclusionDiabetes)}
+                                        value={exclusions.exclusionDiabetes}
+                                        onChange={()=> setExclusions({...exclusions, exclusionDiabetes: !exclusions.exclusionDiabetes})}
                                         name="checkedB"
                                         color="primary"
                                     />
@@ -320,8 +341,8 @@ function HealthStep() {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        value={exclusionCancer}
-                                        onChange={()=> setExclusionCancer(!exclusionCancer)}
+                                        value={exclusions.exclusionCancer}
+                                        onChange={()=> setExclusions({...exclusions, exclusionCancer: !exclusions.exclusionCancer})}
                                         name="checkedB"
                                         color="primary"
                                     />
@@ -333,8 +354,8 @@ function HealthStep() {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        value={exclusionDrugs}
-                                        onChange={()=> setExclusionDrugs(!exclusionDrugs)}
+                                        value={exclusions.exclusionDrugs}
+                                        onChange={()=> setExclusions({...exclusions, exclusionDrugs: !exclusions.exclusionDrugs})}
                                         name="checkedB"
                                         color="primary"
                                     />
@@ -346,8 +367,8 @@ function HealthStep() {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        value={exclusionEatingDis}
-                                        onChange={()=> setExclusionEatingDis(!exclusionEatingDis)}
+                                        value={exclusions.exclusionEatingDis}
+                                        onChange={()=> setExclusions({...exclusions, exclusionEatingDis: !exclusions.exclusionEatingDis})}
                                         name="checkedB"
                                         color="primary"
                                     />
@@ -387,8 +408,8 @@ function HealthStep() {
                                         id="outlined-required"
                                         label={<Trans i18nKey='steps:healthStep.bodyheightLabel'></Trans>}
                                         placeholder={t("steps:healthStep.bodyheightPlaceholder")}
-                                        value={height}
-                                        onChange={(event)=> setHeight(event.target.value)}
+                                        value={generalInfo.height}
+                                        onChange={(event)=> setGeneralInfo({...generalInfo, height: event.target.value})}
                                         variant="outlined"
                                     />
                                 </Grid>
@@ -416,8 +437,8 @@ function HealthStep() {
                                     id="outlined-required"
                                     label={<Trans i18nKey='steps:healthStep.bodyweightLabel'></Trans>}
                                     placeholder={t("steps:healthStep.bodyweightPlaceholder")}
-                                    value={weight}
-                                    onChange={(event)=> setWeight(event.target.value)}
+                                    value={generalInfo.weight}
+                                    onChange={(event)=> setGeneralInfo({...generalInfo, weight: event.target.value})}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -451,7 +472,7 @@ function HealthStep() {
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item sm={6} xs={12}>
-                            <RadioGroup aria-label="gender" name="gender1" value={disabilityFood} onChange={()=> setDisabilityFood(!disabilityFood)}>
+                            <RadioGroup aria-label="gender" name="gender1" value={disabilities.disabilityFood} onChange={()=> setDisabilities({...disabilities, disabilityFood: !disabilities.disabilityFood})}>
                                 <div>
                                     <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.noLabel'></Trans>}/>
                                 </div>
@@ -465,8 +486,8 @@ function HealthStep() {
                                     id="outlined-multiline-static"
                                     label={<Trans i18nKey='steps:healthStep.h5input1Label'></Trans>}
                                     placeholder={t("steps:healthStep.h5input1Placeholder")}
-                                    value={disabilityFoodDetail}
-                                    onChange={event=> setDisabilityFoodDetail(event.target.value)}
+                                    value={disabilities.disabilityFoodDetail}
+                                    onChange={event=> setDisabilities({...disabilities, disabilityFoodDetail: event.target.value})}
                                     multiline
                                     disabled
                                     rows={7}
@@ -480,7 +501,7 @@ function HealthStep() {
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item  sm={6} xs={12}>
-                        <RadioGroup aria-label="gender" name="gender1" value={disabilityMedAllergy} onChange={()=> setDisabilityMedAllergy(!disabilityMedAllergy)}>
+                        <RadioGroup aria-label="gender" name="gender1" value={disabilities.disabilityMedAllergy} onChange={()=> setDisabilities({...disabilities, disabilityMedAllergy: !disabilities.disabilityMedAllergy})}>
                             <div>
                                 <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.noLabel'></Trans>}/>
                             </div>
@@ -494,8 +515,8 @@ function HealthStep() {
                                 id="outlined-multiline-static"
                                 label={<Trans i18nKey='steps:healthStep.h5input2Label'></Trans>}
                                 placeholder={t("steps:healthStep.h5input2Placeholder")}
-                                value={disabilityMedAllergyDetail}
-                                onChange={event=> setDisabilityMedAllergyDetail(event.target.value)}
+                                value={disabilities.disabilityMedAllergyDetail}
+                                onChange={event=> setDisabilities({...disabilities, disabilityMedAllergyDetail: event.target.value})}
                                 multiline
                                 rows={7}
                                 fullWidth={true}
@@ -512,7 +533,7 @@ function HealthStep() {
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item sm={6} xs={12}>                        
-                            <RadioGroup aria-label="gender" name="gender1" value={disabilityLocomotion} onChange={()=> setDisabilityLocomotion(!disabilityLocomotion)}>
+                            <RadioGroup aria-label="gender" name="gender1" value={disabilities.disabilityLocomotion} onChange={()=> setDisabilities({...disabilities, disabilityLocomotion: !disabilities.disabilityLocomotion})}>
                                 <div>
                                     <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.noLabel'></Trans>}/>
                                 </div>
@@ -526,8 +547,8 @@ function HealthStep() {
                                     id="outlined-multiline-static"
                                     label={<Trans i18nKey='steps:healthStep.h6input1Label'></Trans>}
                                     placeholder={t("steps:healthStep.h6input1Placeholder")}
-                                    value={disabilityLocomotionDetail}
-                                    onChange={event=> setDisabilityLocomotionDetail(event.target.value)}
+                                    value={disabilities.disabilityLocomotionDetail}
+                                    onChange={event=> setDisabilities({...disabilities, disabilityLocomotionDetail: event.target.value})}
                                     multiline
                                     rows={7}
                                     fullWidth={true}
@@ -540,7 +561,7 @@ function HealthStep() {
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item  sm={6} xs={12}>
-                        <RadioGroup aria-label="gender" name="gender1" value={disabilityHelp} onChange={()=> setDisabilityHelp(!disabilityHelp)}>
+                        <RadioGroup aria-label="gender" name="gender1" value={disabilities.disabilityHelp} onChange={()=> setDisabilities({...disabilities, disabilityHelp: !disabilities.disabilityHelp})}>
                             <div>
                                 <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.noLabel'></Trans>}/>
                             </div>
@@ -554,8 +575,8 @@ function HealthStep() {
                                 id="outlined-multiline-static"
                                 label={<Trans i18nKey='steps:healthStep.h5input2Label'></Trans>}
                                 placeholder={t("steps:healthStep.h5input2Placeholder")}
-                                value={disabilityHelpDetail}
-                                onChange={event=> setDisabilityHelpDetail(event.target.value)}
+                                value={disabilities.disabilityHelpDetail}
+                                onChange={event=> setDisabilities({...disabilities, disabilityHelpDetail: event.target.value})}
                                 multiline
                                 rows={7}
                                 fullWidth={true}
@@ -574,12 +595,12 @@ function HealthStep() {
                             <p className="font-medium text-sm mb-4 text-grey-500"><Trans i18nKey='steps:healthStep.heading7text'></Trans></p>
                         </Grid>
                         <Grid container xs={12}>
-                            <RadioGroup aria-label="gender" name="gender1" value={medicationGeneral} onChange={()=> setMedicationGeneral(!medicationGeneral)}>
+                            <RadioGroup aria-label="gender" name="gender1" value={generalInfo.medicationGeneral} onChange={()=> setGeneralInfo({...disabilities, generalInfo: !disabilities.generalInfo})}>
                                 <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.heading7check1Label'></Trans>}/>
                                 <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.heading7check2Label'></Trans>}/>
                             </RadioGroup>
                         </Grid>
-                        { medicationGeneral &&
+                        { generalInfo.medicationGeneral &&
                         drugs.map((cur, i) => (
                         <Grid container className="my-6 p-4 border border-blue-300 bg-blue-100 rounded" xs={12}  key={i}>
                                 <Grid container xs={12} spacing={1}>
@@ -588,6 +609,8 @@ function HealthStep() {
                                             id="outlined-multiline-static"
                                             label={<Trans i18nKey='steps:healthStep.forminpu1Label'></Trans>}
                                             placeholder={t("steps:healthStep.forminpu1Placeholder")}
+                                            value={disabilities.disabilityHelpDetail}
+                                            onChange={event=> setDisabilities({...disabilities, disabilityHelpDetail: event.target.value})}
                                             fullWidth={true}
                                             variant="filled"
                                             />  
@@ -672,7 +695,7 @@ function HealthStep() {
                     </Button>
                 </Grid>
                 <Grid xs={6} container justify="flex-end">
-                    <Button onClick={formSubmit} variant="contained" size="large" color="primary">
+                    <Button variant="contained" size="large" color="primary" type="submit">
                         <Trans i18nKey='steps:personalInformation.next'></Trans>
                     </Button>
                 </Grid>

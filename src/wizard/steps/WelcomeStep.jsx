@@ -49,7 +49,7 @@ function WelcomeStep({stepState, onSubmit}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        
         onSubmit(formState);
     }
 
@@ -71,7 +71,7 @@ function WelcomeStep({stepState, onSubmit}) {
                 <Trans i18nKey="steps:welcome.stepTopic">Herzlich Wilkommen</Trans>
             </p>
             <p className="font-medium text-4xl text-gray-700 mb-4">
-                <Trans i18nKey="steps:welcome.stepGreeting">Lieber Gast</Trans>,
+                <Trans i18nKey="steps:welcome.stepGreeting">Lieber Gast</Trans>
             </p>
             <p className="font-medium text-lg text-gray-500">
                 <Trans i18nKey="steps:welcome.stepDescription" />

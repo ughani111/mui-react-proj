@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -7,7 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import countries from './countries.json'
+import countries from '../../globals/countries';
+import titles from '../../globals/titles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,43 +36,69 @@ const useStyles = makeStyles((theme) => ({
   
   }));
 
+  const extractPersonalInfo = (stepState) => {
+    return { 
+        gender: stepState.genders, 
+        title: stepState.title, 
+        lastName: stepState.lastName,
+        firstName: stepState.firstName,
+        email: stepState.email,
+        birthDate: stepState.birthDate,
+        birthPlace: stepState.birthPlace,
+        nationality: stepState.nationality,
+        job: stepState.job
+     } 
+   }
+
+   const extractAddressInfo = (stepState) => {
+        return { 
+            addressPLZ: stepState.addressPLZ, 
+            addressResidency: stepState.addressResidency, 
+            addressStreetNr: stepState.addressStreetNr,
+            addressStreet: stepState.addressStreet,
+            addressCountry: stepState.addressCountry,
+            contactPhone: stepState.contactPhone,
+            contactPhoneAlt: stepState.contactPhoneAlt
+        }
+    }
+
+    const extractLanguageInfo = (stepState) => {
+        return { 
+            languageGerman: stepState.languageGerman, 
+            languageEnglish: stepState.languageEnglish, 
+            languageFrench: stepState.languageFrench,
+            languageSpanish: stepState.languageSpanish,
+            languageOther: stepState.languageOther
+        }
+     }
+
   
 
-function PersonalInformationStep() {
+function PersonalInformationStep({stepState, onSubmit}) {
     const {t, i18n} = useTranslation(['translation', 'common']);
-    const currencies = [{value: 'male',label: t('section:personalInformation.male'),},{value: 'female',label: t('section:personalInformation.female'),},
-                        {value: 'other',label: t('section:personalInformation.other')}];
     
-    const Titles = [{value: 'mr',label: 'mr.',},{value: 'ms',label: 'ms.',},{value: 'mrs',label: 'mrs.',}];
-    const Lands = [{value: 'De',label: 'de',},{value: 'US',label: 'us',},{value: 'SP',label: 'sp',}];
-
+    const [personalInfo, setPersonalInfo] = useState(extractPersonalInfo(stepState));
+    const [addressInfo, setAddressInfo] = useState(extractAddressInfo(stepState));
+    const [languageInfo, setLanguageInfo] = useState(extractLanguageInfo(stepState));
     const classes = useStyles();
-    const [gender, setGender] = React.useState('');
-    const [title, setTitle] = React.useState('');
-    const [lastName, setLastName] = React.useState('');
-    const [firstName, setFirstName] = React.useState('');
-    const [addressPLZ, setAddressPLZ] = React.useState();
-    const [addressResidency, setAddressResidency] = React.useState('');
-    const [addressStreetNr, setAddressStreetNr] = React.useState('');
-    const [addressStreet, setAddressStreet] = React.useState('');
-    const [contactPhone, setContactPhone] = React.useState('');
-    const [contactPhoneAlt, setContactPhoneAlt] = React.useState('');
-    const [job, setJob] = React.useState('');
-    const [languageGerman, setLanguageGerman] = React.useState(false);
-    const [languageEnglish, setLanguageEnglish] = React.useState('');
-    const [languageFrench, setLanguageFrench] = React.useState('');
-    const [languageSpanish, setLanguageSpanish] = React.useState('');
-    const [languageOther, setLanguageOther] = React.useState('');
-    const [birthDate, setBirthDate] = React.useState('');
-    const [birthPlace, setBirthPlace] = React.useState('');
-    const [nationality, setNationality] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    
-    
-    const [addressCountry, setAddressCountry] = React.useState('de');
+
+    const genders = [
+        { value: 'male', label: t('steps:personalInformation.male')},
+        { value: 'female', label: t('steps:personalInformation.female')},
+        { value: 'other', label: t('steps:personalInformation.other')}
+    ];
+
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const formState = { ...personalInfo, ...addressInfo, ...languageInfo }
+        onSubmit(formState);
+    }
 
     return (
         <div className={classes.root}>
+            <form className="mt-12 flex flex-col items-center" onSubmit={handleSubmit} noValidate>
             <Grid container spacing={3}>
                 <Grid item className={classes.paper}>
                     <p className="font-medium text-sm mb-4 uppercase text-gray-400"><Trans i18nKey='steps:personalInformation.stepTopic'></Trans></p>
@@ -93,12 +120,12 @@ function PersonalInformationStep() {
                                 id="outlined-required"
                                 select
                                 label={<Trans i18nKey='steps:personalInformation.dropdown1Label'></Trans>}
-                                value={gender}
-                                onChange={(event) => setGender(event.target.value)}
+                                value={personalInfo.gender}
+                                onChange={(event) => setPersonalInfo({...personalInfo,gender: event.target.value})}
                                 variant="outlined"
                             
                             >
-                            {currencies.map((option) => (
+                            {genders.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>
                                 {option.label}
                                 </MenuItem>
@@ -111,14 +138,14 @@ function PersonalInformationStep() {
                                 id="outlined-required"
                                 select
                                 label={<Trans i18nKey='steps:personalInformation.dropdown2Label'></Trans>}
-                                value={title}
-                                onChange={(event) => setTitle(event.target.value)}
+                                value={personalInfo.title}
+                                onChange={(event) => setPersonalInfo({...personalInfo,title: event.target.value})}
                                 variant="outlined"
                         
                             >
-                            {Titles.map((option) => (
+                            {titles.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>
-                                {option.label}
+                                    {option.label}
                                 </MenuItem>
                             ))}
                             </TextField>
@@ -129,8 +156,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
-                        value={firstName}
-                        onChange={event=> setFirstName(event.target.value)}
+                        value={personalInfo.firstName}
+                        onChange={(event) => setPersonalInfo({...personalInfo,firstName: event.target.value})}
                         label={<Trans i18nKey='steps:personalInformation.firstnameLabel'></Trans>}
                         placeholder={t("steps:personalInformation.firstnamePlaceholder")}
                         variant="outlined"
@@ -141,8 +168,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
-                        value={lastName}
-                        onChange={event=> setLastName(event.target.value)}
+                        value={personalInfo.lastName}
+                        onChange={(event) => setPersonalInfo({...personalInfo,lastName: event.target.value})}
                         label={<Trans i18nKey='steps:personalInformation.lastnameLabel'></Trans>}
                         placeholder={t("steps:personalInformation.lastnamePlaceholder")}
                         variant="outlined"
@@ -153,8 +180,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
-                        value={birthDate}
-                        onChange={event=> setBirthDate(event.target.value)}
+                        value={personalInfo.birthDate}
+                        onChange={(event) => setPersonalInfo({...personalInfo,birthDate: event.target.value})}
                         label={<Trans i18nKey='steps:personalInformation.birthdayLabel'></Trans>}
                         placeholder={t("steps:personalInformation.birthdayPlaceholder")}
                         variant="outlined"
@@ -165,8 +192,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
-                        value={birthPlace}
-                        onChange={event=> setBirthPlace(event.target.value)}
+                        value={personalInfo.birthPlace}
+                        onChange={(event) => setPersonalInfo({...personalInfo,birthPlace: event.target.value})}
                         label={<Trans i18nKey='steps:personalInformation.birthcityLabel'></Trans>}
                         placeholder={t("steps:personalInformation.birthdayPlaceholder")}
                         variant="outlined"
@@ -177,8 +204,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
-                        value={job}
-                        onChange={event=> setJob(event.target.value)}
+                        value={personalInfo.job}
+                        onChange={(event) => setPersonalInfo({...personalInfo,job: event.target.value})}
                         label={<Trans i18nKey='steps:personalInformation.workLabel'></Trans>}
                         placeholder={t("steps:personalInformation.workPlaceholder")}
                         variant="outlined"
@@ -200,8 +227,8 @@ function PersonalInformationStep() {
                                 <TextField
                                     className={classes.input}
                                     id="outlined-required"
-                                    value={addressStreet}
-                                    onChange={event=> setAddressStreet(event.target.value)}
+                                    value={addressInfo.addressStreet}
+                                    onChange={(event) => setAddressInfo({...addressInfo,addressStreet: event.target.value})}
                                     label={<Trans i18nKey='steps:personalInformation.streetLabel'></Trans>}
                                     placeholder={t("steps:personalInformation.streetPlaceholder")}
                                     variant="outlined"
@@ -213,8 +240,8 @@ function PersonalInformationStep() {
                                 <TextField
                                     className={classes.input}
                                     id="outlined-required"
-                                    value={addressStreetNr}
-                                    onChange={event=> setAddressStreetNr(event.target.value)}
+                                    value={addressInfo.addressStreetNr}
+                                    onChange={(event) => setAddressInfo({...addressInfo,addressStreetNr: event.target.value})}
                                     label={<Trans i18nKey='steps:personalInformation.numberLabel'></Trans>}
                                     placeholder={t("steps:personalInformation.numberPlaceholder")}
                                     variant="outlined"
@@ -229,8 +256,8 @@ function PersonalInformationStep() {
                                 <TextField
                                     className={classes.input}
                                     id="outlined-required"
-                                    value={addressPLZ}
-                                    onChange={event=> setAddressPLZ(event.target.value)}
+                                    value={addressInfo.addressPLZ}
+                                    onChange={(event) => setAddressInfo({...addressInfo,addressPLZ: event.target.value})}
                                     label={<Trans i18nKey='steps:personalInformation.postLabel'></Trans>}
                                     placeholder={t("steps:personalInformation.postPlaceholder")}
                                     variant="outlined"
@@ -242,8 +269,8 @@ function PersonalInformationStep() {
                                 <TextField
                                     className={classes.input}
                                     id="outlined-required"
-                                    value={addressResidency}
-                                    onChange={event=> setAddressResidency(event.target.value)}
+                                    value={addressInfo.addressResidency}
+                                    onChange={(event) => setAddressInfo({...addressInfo,addressResidency: event.target.value})}
                                     label={<Trans i18nKey='steps:personalInformation.citylivingLabel'></Trans>}
                                     placeholder={t("steps:personalInformation.citylivingPlaceholder")}
                                     variant="outlined"
@@ -256,13 +283,11 @@ function PersonalInformationStep() {
                         <TextField
                             className={classes.select}
                             id="outlined-required"
-                            value={addressCountry}
-                            onChange={event=> setAddressCountry(event.target.value)}
+                            value={addressInfo.addressCountry}
+                            onChange={(event) => setAddressInfo({...addressInfo,addressCountry: event.target.value})}
                             select
                             label={<Trans i18nKey='steps:personalInformation.countryLabel'></Trans>}
                             placeholder={t("steps:personalInformation.countryPlaceholder")}
-                            value={addressCountry}
-                            onChange={(event) => setAddressCountry(event.target.value)}
                             variant="outlined"
                     
                         >
@@ -278,8 +303,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
-                        value={nationality}
-                        onChange={event=> setNationality(event.target.value)}
+                        value={personalInfo.nationality}
+                        onChange={(event) => setPersonalInfo({...personalInfo,nationality: event.target.value})}
                         label={<Trans i18nKey='steps:personalInformation.nationalityLabel'></Trans>}
                         placeholder={t("steps:personalInformation.nationalityPlaceholder")}
                         variant="outlined"
@@ -290,8 +315,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
-                        value={email}
-                        onChange={event=> setEmail(event.target.value)}
+                        value={personalInfo.email}
+                        onChange={(event) => setPersonalInfo({...personalInfo,email: event.target.value})}
                         label={<Trans i18nKey='steps:personalInformation.emailLabel'></Trans>}
                         placeholder={t("steps:personalInformation.emailPlaceholder")}
                         variant="outlined"
@@ -302,8 +327,8 @@ function PersonalInformationStep() {
                     <TextField
                         className={classes.input}
                         id="outlined-required"
-                        value={contactPhone}
-                        onChange={event=> setContactPhone(event.target.value)}
+                        value={personalInfo.contactPhone}
+                        onChange={(event) => setPersonalInfo({...personalInfo,contactPhone: event.target.value})}
                         label={<Trans i18nKey='steps:personalInformation.mobileLabel'></Trans>}
                         placeholder={t("steps:personalInformation.mobileLabel")}
                         variant="outlined"
@@ -318,7 +343,7 @@ function PersonalInformationStep() {
                     <p className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:personalInformation.languageInformation'></Trans></p>
             </Grid>
             <Grid item sm={6} xs={12}>
-                <p className="font-medium text-sm mb-4 italic text-gray-400"><Trans i18nKey='steps:personalInformation.langaugeIntrotext'></Trans></p>
+                <p className="font-medium text-sm mb-4 italic text-gray-400"><Trans i18nKey='steps:personalInformation.languageIntrotext'></Trans></p>
             </Grid>
             <Grid item sm={6} xs={12}>
                 <Grid container>
@@ -326,8 +351,8 @@ function PersonalInformationStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={languageGerman}
-                                    onChange={()=>setLanguageGerman(!languageGerman)}
+                                    checked={languageInfo.languageGerman}
+                                    onChange={(event) => setLanguageInfo({...languageInfo, languageGerman: !languageInfo.languageGerman})}
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -339,8 +364,8 @@ function PersonalInformationStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={languageEnglish}
-                                    onChange={()=>setLanguageEnglish(!languageEnglish)}
+                                    checked={languageInfo.languageEnglish}
+                                    onChange={(event) => setLanguageInfo({...languageInfo, languageEnglish: !languageInfo.languageEnglish})}
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -352,8 +377,8 @@ function PersonalInformationStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={languageFrench}
-                                    onChange={()=>setLanguageFrench(!languageFrench)}
+                                    checked={languageInfo.languageFrench}
+                                    onChange={(event) => setLanguageInfo({...languageInfo, languageFrench: !languageInfo.languageFrench})}
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -365,8 +390,8 @@ function PersonalInformationStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={languageSpanish}
-                                    onChange={()=>setLanguageSpanish(!languageSpanish)}
+                                    checked={languageInfo.languageSpanish}
+                                    onChange={(event) => setLanguageInfo({...languageInfo, languageSpanish: !languageInfo.languageSpanish})}
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -383,12 +408,13 @@ function PersonalInformationStep() {
                     </Button>
                 </Grid>
                 <Grid xs={6} container justify="flex-end">
-                    <Button variant="contained" size="large" color="primary">
+                    <Button  type="submit" variant="contained" size="large" color="primary">
                         <Trans i18nKey='steps:personalInformation.next'></Trans>
                     </Button>
                 </Grid>
             </Grid>
-            </Grid>
+            </Grid> 
+        </form>
     </div>
     )
 }
