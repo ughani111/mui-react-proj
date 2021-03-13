@@ -16,6 +16,68 @@ const useStyles = makeStyles((theme) => ({
 const initalState = {
     0: {
         alreadyVisited: false
+    },
+    1: {
+        gender: "",
+        title: "",
+        lastName: "",
+        firstName: "",
+        addressPLZ: "",
+        addressResidency: "",
+        addressStreetNr: "",
+        addressStreet: "",
+        contactPerson: "",
+        contactPhone: "",
+        job: "",
+        languageGerman: false,
+        languageEnglish: false,
+        languageFrench: false, 
+        languageSpanish: false,
+        languageOther: "",
+        birthDate: "",
+        birthPlace: "",
+        nationality: "",
+        email: "",
+        addressCountry: ""
+    },
+    2: {
+        mediaTV: false,
+        mediaDVD: false,
+        therapyType: "",
+        talk: "",
+        talkDetail: ""
+    },
+    3: {
+        resonPrevention: false,
+        reasonRegeneration: false,
+        reasonWeight: false,
+        reasonSmoke: false,
+        reasonAcute: false,
+        reasonAcuteDetail: "",
+        reasonChronic: false,
+        reasonLocomotive: false,
+        reasonDigestive: false,
+        exclusionDiabetes: false,
+        exclusionCancer: false,
+        exclusionDrugs: false,
+        exclusionEatingDis: false,
+        medicationGeneral: false,
+        disabilityFood: false,
+        disabilityFoodDetail: "",
+        disabilityMedAllergy: false,
+        disabilityMedAllergyDetail: "",
+        disabilityLocomotion: false,
+        disabilityLocomotionDetail: "",
+        disabilityHelp: false,
+        disabilityHelpDetail: "",
+        weight: 0,
+        height: 0
+    },
+    4: {
+        legalAGB: false,
+        legalPrivacy: false,
+        legalMarketing: false,
+        legalPicture: false
     }
 }
 
@@ -96,6 +158,8 @@ export default function StepContainer({ steps }) {
         }));
 
         gotToStep(activeStep + 1);
+
+        console.log(stepsState)
     }
 
     const StepRendererComponent = steps[activeStep].comp;

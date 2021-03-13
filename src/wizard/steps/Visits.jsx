@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
+import useConfig from '../../hooks';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
     const {imageUrl, label, ...rest} = props;
 
     const classes = useStyles();
-
     return (
         <div className="w-full">
             <img className="w-full h-44 object-cover rounded-md" src={props.imageUrl} />
@@ -65,27 +65,49 @@ const useStyles = makeStyles((theme) => ({
     )
 }
 
-function VisitStep() {
+function VisitStep({stepState, onSubmit}) {
     
-
+    const [formState, setFormState] = useState({
+        talk: stepState.talk,
+        talkDetail: stepState.talkDetail,
+        mediaTV: stepState.mediaTV,
+        mediaDVD: stepState.mediaDVD,
+        therapyType: stepState.therapyType
+    });
+    
+    
+    const imagesUrl = useConfig().imagesUrl;
     const classes = useStyles();
     const {t, i18n} = useTranslation(['translation', 'common']);
+    const image1Url = `${imagesUrl}step2-1-1.png`
+    const image2Url = `${imagesUrl}step2-1-2.png`
 
-   
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        onSubmit(formState);
+    }
 
     return (
         <div className={classes.root}>
                 <p className="font-medium w-full text-sm mb-4 uppercase text-gray-400"><Trans i18nKey='steps:visitStep.stepTopic'></Trans></p>
                 <h2 className="font-large text-3xl mb-4 text-black-400"><Trans i18nKey='steps:visitStep.stepGreeting'></Trans></h2>
-                <form className="mt-12 flex flex-col" /*onSubmit={handleSubmit}*/ noValidate>
+                <form className="mt-12 flex flex-col" onSubmit={handleSubmit} noValidate>
                     <div className="flex flex-row justify-between">
-                        <RadioGroup classes={{root: classes.radioGroup}} className="w-full flex flex-row justify-between" aria-label="quiz" name="quiz" /*value={formState.alreadyVisited} onChange={handleRadioChange}*/>
+                        <RadioGroup classes={{root: classes.radioGroup}} className="w-full flex flex-row justify-between" aria-label="quiz" name="quiz" 
+                                    value={formState.therapyType} 
+                                    // onChange={
+                                    //     (state) => ({
+                                    //         ...state,
+                                    //         alreadyVisited: event.target.value === "true"
+                                    //     })
+                                    // }
+                                    /*onChange={event => setSetFormState({...formState, therapyType: event.target.value})}*/>
                             <div className="w-5/12">
-                                <FormControlLabel value={false} /*onChange={handleRadioChange}*/ control={<RadioWithImage /*imageUrl={image1Url}*/ label={t('steps:visitStep.pic1Label')} />}/>
+                                <FormControlLabel value="Fasten" control={<RadioWithImage imageUrl={image1Url} label={t('steps:visitStep.pic1Label')} />}/>
                             </div>
 
                             <div className="w-5/12">
-                                <FormControlLabel value={true} /*onChange={handleRadioChange}*/ control={<RadioWithImage /*imageUrl={image2Url}*/ label={t('steps:visitStep.pic2Label')} />}/>
+                                <FormControlLabel value="Ernährung" control={<RadioWithImage imageUrl={image2Url} label={t('steps:visitStep.pic2Label')} />}/>
                             </div>
                         </RadioGroup>
                     </div>
@@ -96,8 +118,8 @@ function VisitStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    // checked={state.checkedB}
-                                    // onChange={handleChange}
+                                    checked={formState.mediaTV}
+                                    onChange={event => setFormState({...formState, mediaTV: !formState.mediaTV})} 
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -109,8 +131,8 @@ function VisitStep() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    // checked={state.checkedB}
-                                    // onChange={handleChange}
+                                    checked={formState.mediaDVD}
+                                    onChange={event => setFormState({...formState, mediaDVD: !formState.mediaDVD})} 
                                     name="checkedB"
                                     color="primary"
                                 />
@@ -119,14 +141,14 @@ function VisitStep() {
                         />
                     </div>
                     <div className="my-6 p-4 border border-blue-300 bg-blue-100 rounded">
-                        <h2 className="text-black text-lg"><Trans i18nKey='steps:visitStep.information'></Trans></h2>
-                        <p><Trans i18nKey='steps:visitStep.infotext'></Trans></p>
+                        <h2 className="text-black text-lg"><InfoOutlinedIcon className="text-blue-500" /> <span className="pl-1 text-blue-500"><Trans i18nKey='steps:visitStep.information'></Trans></span></h2>
+                        <p className="ml-9"><Trans i18nKey='steps:visitStep.infotext'></Trans></p>
                     </div>
                     <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading3'></Trans></h2>
                     <p className="font-medium text-sm mb-4 italic text-gray-500"><Trans i18nKey='steps:visitStep.heading3text'></Trans></p>
                     <Grid container xs={12} className='my-12'>
                         <Grid item xs={5}>
-                            <RadioGroup aria-label="gender" name="gender1" /*value={value} onChange={handleChange}*/>
+                            <RadioGroup aria-label="gender" name="gender1" value={formState.talk} onChange={event=> setFormState({...formState, talk: event.target.value})}>
                                 <FormControlLabel value="yes" control={<Radio />} label={<Trans i18nKey='steps:visitStep.yes'></Trans>} />
                                 <FormControlLabel value="no" control={<Radio />} label={<Trans i18nKey='steps:visitStep.no'></Trans>} />
                                 <FormControlLabel value="maybe" control={<Radio />} label={<Trans i18nKey='steps:visitStep.maybe'></Trans>} />
@@ -137,7 +159,9 @@ function VisitStep() {
                         <TextField
                             id="outlined-multiline-static"
                             label={<Trans i18nKey='steps:visitStep.messageLabel'></Trans>}
-                            placeholder={t("steps:personalInformation.messagePlaceholder")}
+                            placeholder={t("steps:visitStep.messagePlaceholder")}
+                            value={formState.talkDetail}
+                            onChange={event=>setFormState({...formState, talkDetail: event.target.value})}
                             multiline
                             rows={7}
                             fullWidth={true}
@@ -152,6 +176,8 @@ function VisitStep() {
                             <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading4'></Trans></h2>
                             <p className="font-medium text-sm mb-4 italic text-gray-500"><Trans i18nKey='steps:visitStep.heading4text'></Trans></p>
                         </Grid>
+                        {/* TODO */}
+                        {/* value yet to be decided */}
                         <RadioGroup aria-label="gender" name="gender1" /*value={value} onChange={handleChange}*/>
                             <FormControlLabel value="yes" control={<Radio />} label={<Trans i18nKey='steps:visitStep.yes'></Trans>} />
                             <FormControlLabel value="no" control={<Radio />} label={<Trans i18nKey='steps:visitStep.no'></Trans>} />
@@ -164,7 +190,7 @@ function VisitStep() {
                             </Button>
                         </Grid>
                         <Grid xs={6} container justify="flex-end">
-                            <Button variant="contained" size="large" color="primary">
+                            <Button variant="contained" size="large" color="primary" type="submit">
                                 <Trans i18nKey='steps:personalInformation.next'></Trans>
                             </Button>
                         </Grid>
