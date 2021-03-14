@@ -93,7 +93,7 @@ function PersonalInformationStep({stepState, onSubmit}) {
         event.preventDefault();
 
         const formState = { ...personalInfo, ...addressInfo, ...languageInfo }
-        onSubmit(formState);
+        onSubmit(formState, 1);
     }
 
     return (
@@ -101,16 +101,16 @@ function PersonalInformationStep({stepState, onSubmit}) {
             <form className="mt-12 flex flex-col items-center" onSubmit={handleSubmit} noValidate>
             <Grid container spacing={3}>
                 <Grid item className={classes.paper}>
-                    <p className="font-medium text-sm mb-4 uppercase text-gray-400"><Trans i18nKey='steps:personalInformation.stepTopic'></Trans></p>
-                    <h2 className="font-large text-3xl mb-4 text-black-400"><Trans i18nKey='steps:personalInformation.stepGreeting'></Trans></h2>
+                    <p className="font-medium text-md mb-4 uppercase text-gray-400"><Trans i18nKey='steps:personalInformation.stepTopic'></Trans></p>
+                    <h2 className="font-medium text-4xl text-gray-700 mb-4"><Trans i18nKey='steps:personalInformation.stepGreeting'></Trans></h2>
                 </Grid>
 
                 {/* about me section */}
                 <Grid item xs={12}>
-                     <p className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:personalInformation.aboutme'></Trans></p>
+                     <p className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:personalInformation.aboutme'></Trans></p>
                 </Grid>
                 <Grid item sm={6} xs={12}>
-                    <p className="font-medium text-sm mb-4 italic text-gray-400"><Trans i18nKey='steps:personalInformation.aboutmeIntrotext'></Trans></p>
+                    <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:personalInformation.aboutmeIntrotext'></Trans></p>
                 </Grid>
                 <Grid item sm={6} xs={12}>
                     <Grid container spacing={3}>
@@ -215,10 +215,10 @@ function PersonalInformationStep({stepState, onSubmit}) {
                 
                 {/* KONTACT INFORMATIONEN */}
                 <Grid item xs={12}>
-                     <p className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:personalInformation.contactinformation'></Trans></p>
+                     <p className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:personalInformation.contactinformation'></Trans></p>
                 </Grid>
                 <Grid item sm={6} xs={12}>
-                    <p className="font-medium text-sm mb-4 italic text-gray-400"><Trans i18nKey='steps:personalInformation.contactIntrotext'></Trans></p>
+                    <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:personalInformation.contactIntrotext'></Trans></p>
                 </Grid>
                 <Grid item sm={6} xs={12}>
                     <Grid container spacing={3}>
@@ -340,10 +340,10 @@ function PersonalInformationStep({stepState, onSubmit}) {
 
             {/* KONTACT INFORMATIONEN */}
             <Grid item xs={12}>
-                    <p className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:personalInformation.languageInformation'></Trans></p>
+                    <p className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:personalInformation.languageInformation'></Trans></p>
             </Grid>
             <Grid item sm={6} xs={12}>
-                <p className="font-medium text-sm mb-4 italic text-gray-400"><Trans i18nKey='steps:personalInformation.languageIntrotext'></Trans></p>
+                <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:personalInformation.languageIntrotext'></Trans></p>
             </Grid>
             <Grid item sm={6} xs={12}>
                 <Grid container>

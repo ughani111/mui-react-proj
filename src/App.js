@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
 
 function App() {
     const classes = useStyles();
-
     return (
         <MuiThemeProvider theme={appTheme}>
             <div className={classes.root}>

@@ -3,6 +3,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Check from '@material-ui/icons/Check';
 
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -43,7 +44,7 @@ const initalState = {
     2: {
         mediaTV: false,
         mediaDVD: false,
-        therapyType: "",
+        therapyType: "Fasten",
         talk: "",
         talkDetail: ""
     },
@@ -62,6 +63,14 @@ const initalState = {
         exclusionDrugs: false,
         exclusionEatingDis: false,
         medicationGeneral: false,
+        medication: [{
+            index: Math.random(),
+            name: "",
+            author: "",
+            type: "",
+            dateOfPublish: "",
+            price: ""
+        }],
         disabilityFood: false,
         disabilityFoodDetail: "",
         disabilityMedAllergy: false,
@@ -83,27 +92,31 @@ const initalState = {
 
 const stepConnector = <ChevronRightIcon className="text-blue-500" />;
 
-function StepCustomLabel({label, i18nLabel, stepIndex, active, onClick}) {
+function StepCustomLabel({label, i18nLabel, stepIndex, active, isDone, onClick}) {
     const { t, i18n } = useTranslation(['common', 'steps']);
 
     const onButtonClick = () => {
         onClick(stepIndex);
     };
 
-    const className = `font-bold text-blue-500 bg-white h-8 px-2 rounded-md border-solid border-blue-500 flex items-center justify-center ${active ? 'border' : 'border-0'}`;
+    const className = `font-bold bg-white h-8 px-2 rounded-md border-solid border-blue-500 flex items-center justify-center ${active ? 'border' : 'border-0'} ${(isDone || active) ? 'text-blue-500' : 'text-blue-200'}`;
 
     return (
         <button className={className} onClick={onButtonClick}>
+            {isDone && <Check className="mr-1 text-blue-500" />}
             {t(i18nLabel)}
         </button>
     );
 }
 
-export default function StepContainer({ steps }) {
+export default function StepContainer({ steps, onDone }) {
+    
     const {t, i18n} = useTranslation(['common', 'steps']);
     const [stepsState, setStepsState] = useState(initalState);
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
+    const [doneState, setDoneState] = React.useState(steps.map(step => false));
+    
 
     const isStepOptional = (step) => {
         return step === 1;
@@ -151,29 +164,39 @@ export default function StepContainer({ steps }) {
         setActiveStep(0);
     };
 
-    const handleStepSubmit = (stepValue) => {
+    const handleStepSubmit = (stepValue, stepIndex) => {
         setStepsState((state) => ({
            ...state,
            [activeStep]: stepValue
         }));
 
+
+        console.log(stepsState, stepIndex)
+
+        const updatedArray = [...doneState]        
+        updatedArray[stepIndex] = true;
+        setDoneState(() => updatedArray)
         gotToStep(activeStep + 1);
 
-        console.log(stepsState)
+        // TODO
+        // if(stepValue === lastStep){
+        //     onDone()
+        // }
+
+        
     }
 
     const StepRendererComponent = steps[activeStep].comp;
     const stepProps = { stepState: stepsState[activeStep], onSubmit: handleStepSubmit }
 
     const classes = useStyles();
-
     return (
         <div>
             <Stepper classes={classes} activeStep={activeStep} connector={stepConnector}>
                 {steps.map(({label, i18nLabel, comp}, index) => {
                     return (
                         <Step key={label}>
-                            <StepLabel StepIconProps={{label, i18nLabel, stepIndex: index, onClick: gotToStep}} StepIconComponent={StepCustomLabel} />
+                            <StepLabel StepIconProps={{label, i18nLabel, stepIndex: index, isDone: doneState[index],  onClick: gotToStep}} StepIconComponent={StepCustomLabel} />
                         </Step>
                     );
                 })}

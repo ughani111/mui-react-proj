@@ -151,5 +151,12 @@
     "terms2": "Nulla arcu ipsum, finibus ac tortor vel, tincidunt commodo tortor. Proin semper tellus eget massa feugiat pretium. Ut at elit dictum elit pellentesque lobortis. Donec pulvinar bibendum dui. Proin eget massa eget nisi maximus pulvinar. Vivamus sed mi sit amet tellus blandit dignissim.",
     "terms3": "Aliquam erat volutpat. Vestibulum eu ultrices ex. Donec eu congue orci. Nulla facilisi. Donec tincidunt ullamcorper ipsum eu mollis. Nam vitae magna lorem.",
     "terms4": "Nunc pellentesque ullamcorper odio non malesuada. Aenean mattis dolor vel scelerisque feugiat. Nam convallis et elit sit amet fringilla."
-  }
+  },
+  "successStep": {
+    "stepTopic": "bis bald",
+    "stepGreeting": "Danke, dass Sie sich die Zeit genommen haben uns Ihre Daten zu übermitteln. Wir freuen uns, Sie schon bald bei uns begrüßen zu dürfen.",
+    "heading2": "Information",
+    "heading2text": "InformationDie Zusage über die Aufnahme wird dem Patienten vor seiner Anreise bestätigt. Die Entscheidung über die endgültige Therapie bleibt der ärztlichen Aufnahmeuntersuchung vorbehalten. Im Zweifelsfalle setzen Sie sich bitte mit der ärztlichen Leitung in Verbindung: [medicos@buchinger-wilhelmi.es|....]",
+    "submitButton": "Formular Druken"
+    }
 }

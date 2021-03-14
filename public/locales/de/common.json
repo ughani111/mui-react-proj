@@ -4,7 +4,8 @@
     "personalInformation": "Persönliche Information",
     "visits": "Aufenthalt",
     "health": "Gesundheit",
-    "closing": "Abschluss"
+    "closing": "Abschluss",
+    "success": ""
   },
   "labels": {
     "language": "Sprache",
