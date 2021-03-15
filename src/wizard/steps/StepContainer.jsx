@@ -3,6 +3,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Check from '@material-ui/icons/Check';
 
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -43,7 +44,7 @@ const initalState = {
     2: {
         mediaTV: false,
         mediaDVD: false,
-        therapyType: "",
+        therapyType: "Fasten",
         talk: "",
         talkDetail: ""
     },
@@ -62,6 +63,14 @@ const initalState = {
         exclusionDrugs: false,
         exclusionEatingDis: false,
         medicationGeneral: false,
+        medication: [{
+            index: Math.random(),
+            name: "",
+            author: "",
+            type: "",
+            dateOfPublish: "",
+            price: ""
+        }],
         disabilityFood: false,
         disabilityFoodDetail: "",
         disabilityMedAllergy: false,
@@ -83,27 +92,34 @@ const initalState = {
 
 const stepConnector = <ChevronRightIcon className="text-blue-500" />;
 
-function StepCustomLabel({label, i18nLabel, stepIndex, active, onClick}) {
+function StepCustomLabel({label, i18nLabel, stepIndex, active, isDone, onClick}) {
     const { t, i18n } = useTranslation(['common', 'steps']);
 
     const onButtonClick = () => {
         onClick(stepIndex);
     };
 
-    const className = `font-bold text-blue-500 bg-white h-8 px-2 rounded-md border-solid border-blue-500 flex items-center justify-center ${active ? 'border' : 'border-0'}`;
+    const className = `font-bold bg-white h-8 px-2 rounded-md border-solid border-blue-500 flex items-center justify-center ${active ? 'border' : 'border-0'} ${(isDone || active) ? 'text-blue-500' : 'text-blue-200'}`;
 
     return (
         <button className={className} onClick={onButtonClick}>
+            {isDone && <Check className="mr-1 text-blue-500" />}
             {t(i18nLabel)}
         </button>
     );
 }
 
-export default function StepContainer({ steps }) {
+export default function StepContainer({ steps, onDone }) {
+    const getLastState = JSON.parse(localStorage.getItem("diev_ls_willhami_curr_form_state"));
+    const getLastDoneState = JSON.parse(localStorage.getItem("diev_ls_willhami_curr_form_get_l_d_state"));
+    const getLastActiveStepState = JSON.parse(localStorage.getItem("diev_ls_willhami_curr_form_get_a_s_state"));
     const {t, i18n} = useTranslation(['common', 'steps']);
-    const [stepsState, setStepsState] = useState(initalState);
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [stepsState, setStepsState] = useState(getLastState || initalState);
+    console.log("stepsState after ls", stepsState);
+    const [activeStep, setActiveStep] = React.useState(getLastActiveStepState || 0);
     const [skipped, setSkipped] = React.useState(new Set());
+    const [doneState, setDoneState] = React.useState(getLastDoneState || steps.map(step => false));
+    
 
     const isStepOptional = (step) => {
         return step === 1;
@@ -128,8 +144,19 @@ export default function StepContainer({ steps }) {
         setSkipped(newSkipped);
     };
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    const handleBack = (stepValue, stepIndex) => {
+        setStepsState((state) => ({
+            ...state,
+            [activeStep]: stepValue
+         }));
+ 
+ 
+        //  console.log(stepsState, stepIndex)
+ 
+        //  const updatedArray = [...doneState]        
+        //  updatedArray[stepIndex] = true;
+        //  setDoneState(() => updatedArray)
+         gotToStep(activeStep - 1);
     };
 
     const handleSkip = () => {
@@ -151,29 +178,69 @@ export default function StepContainer({ steps }) {
         setActiveStep(0);
     };
 
-    const handleStepSubmit = (stepValue) => {
+    const handleStepSubmit = async (stepValue, stepIndex) => {
         setStepsState((state) => ({
            ...state,
            [activeStep]: stepValue
         }));
 
+
+        console.log(stepsState, stepIndex)
+
+        const updatedArray = [...doneState]        
+        updatedArray[stepIndex] = true;
+        setDoneState(() => updatedArray)
+        
+
+  
+
+
+        // TODO
+        const finalStep = 4;
+        if(stepIndex === finalStep){
+            const datatoPost = Object.assign(
+                {}, 
+                stepsState[0], 
+                stepsState[1], 
+                stepsState[2], 
+                stepsState[3], 
+                stepsState[4]
+            )
+            await onDone(datatoPost)
+            .then(msg => console.log(msg))
+            .fail(err=> console.log(err))
+
+            localStorage.removeItem('diev_ls_willhami_curr_form_get_l_d_state');
+        }
+
         gotToStep(activeStep + 1);
 
-        console.log(stepsState)
+        
     }
 
+    React.useEffect(() => {
+        localStorage.setItem("diev_ls_willhami_curr_form_state", JSON.stringify(stepsState));
+    }, [stepsState, doneState, activeStep]);
+
+    React.useEffect(() => {
+        localStorage.setItem("diev_ls_willhami_curr_form_get_l_d_state", JSON.stringify(doneState));
+    }, [stepsState, doneState, activeStep]);
+
+    React.useEffect(() => {
+        localStorage.setItem("diev_ls_willhami_curr_form_get_a_s_state", JSON.stringify(activeStep));
+    }, [stepsState, doneState, activeStep]);
+
     const StepRendererComponent = steps[activeStep].comp;
-    const stepProps = { stepState: stepsState[activeStep], onSubmit: handleStepSubmit }
+    const stepProps = { stepState: stepsState[activeStep], onSubmit: handleStepSubmit, onGoBack: handleBack }
 
     const classes = useStyles();
-
     return (
         <div>
             <Stepper classes={classes} activeStep={activeStep} connector={stepConnector}>
                 {steps.map(({label, i18nLabel, comp}, index) => {
                     return (
                         <Step key={label}>
-                            <StepLabel StepIconProps={{label, i18nLabel, stepIndex: index, onClick: gotToStep}} StepIconComponent={StepCustomLabel} />
+                            <StepLabel StepIconProps={{label, i18nLabel, stepIndex: index, isDone: doneState[index],  onClick: gotToStep}} StepIconComponent={StepCustomLabel} />
                         </Step>
                     );
                 })}

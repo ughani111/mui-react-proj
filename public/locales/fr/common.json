@@ -1,0 +1,14 @@
+{
+  "headings": {
+    "welcome": "Bienvenue",
+    "personalInformation": "Renseignements personnels",
+    "visits": "Visites",
+    "health": "Santé",
+    "closing": "Clausura",
+    "success": ""
+  },
+  "labels": {
+    "language": "Langue",
+    "fillRegistrationForm": "Remplissez le formulaire d'inscription"
+  }
+}

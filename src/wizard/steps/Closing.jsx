@@ -52,22 +52,30 @@ const useStyles = makeStyles((theme) => ({
     }
  }
 
-function Closing({stepState, onSubmit}) {
+function Closing({stepState, onSubmit, onGoBack}) {
     const classes = useStyles();
     const {t, i18n} = useTranslation(['translation', 'common']);
 
     const [legalInfo, setLegalInfo] = useState(extractLegalInfo(stepState));    
     const handleSubmit = (event) => {
         event.preventDefault();        
-        onSubmit({...legalInfo});
+        onSubmit({...legalInfo}, 4);
     }
+    
+    const stepBackHandler = (event) => {
+        event.preventDefault();
+        
+        onGoBack({...legalInfo}, 4);
+
+    }
+
     return (
         <div className={classes.root}>
             <form action="#" onSubmit={handleSubmit} noValidate>
                 <p className="font-medium w-full text-sm mb-4 uppercase text-gray-400"><Trans i18nKey='steps:closingStep.stepTopic'></Trans></p>
-                <p className="font-large text-3xl mb-4 text-black-400"><Trans i18nKey='steps:closingStep.stepGreeting'></Trans></p>
+                <p className="font-medium text-4xl text-gray-700 mb-4"><Trans i18nKey='steps:closingStep.stepGreeting'></Trans></p>
                 <h2 className="font-medium my-3 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:closingStep.heading2'></Trans></h2>
-                <p className="font-medium w-3/4 my-3 text-sm mb-4 italic text-gray-500"><Trans i18nKey='steps:closingStep.heading2text'></Trans></p>
+                <p className="font-medium w-3/4 my-3 text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:closingStep.heading2text'></Trans></p>
 
                 <div>
                     <FormControlLabel
@@ -207,7 +215,7 @@ function Closing({stepState, onSubmit}) {
                     </Grid>
                     <Grid container className="pt-6">
                         <Grid item xs={6}>
-                            <Button variant="contained" size="large" color="default">
+                            <Button variant="contained" size="large" color="default" onClick={stepBackHandler}>
                                 <Trans i18nKey='steps:personalInformation.previous'></Trans>
                             </Button>
                         </Grid>

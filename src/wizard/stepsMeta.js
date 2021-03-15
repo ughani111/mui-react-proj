@@ -3,6 +3,7 @@ import PersonalInformationStep from './steps/PersonalInformationStep';
 import VisitsStep from './steps/Visits';
 import HealthStep from './steps/Health';
 import ClosingStep from './steps/Closing';
+import SucessStep from './steps/Success';
 
 const steps = [
   {
@@ -29,6 +30,11 @@ const steps = [
     label: 'Abschluss',
     i18nLabel: 'common:headings.closing',
     comp: ClosingStep
+  },
+  {
+    label: 'Success',
+    i18nLabel: 'common:headings.success',
+    comp: SucessStep
   }
 ];
 

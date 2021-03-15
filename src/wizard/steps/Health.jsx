@@ -82,23 +82,14 @@ const useStyles = makeStyles((theme) => ({
         land: "", 
         weight: "",
         height: "",
-        medicationGeneral: stepState.medicationGeneral
+        medicationGeneral: stepState.medicationGeneral,
+        medication: stepState.medication
     }
    }
 
 
-function HealthStep({stepState, onSubmit}) {
+function HealthStep({stepState, onSubmit, onGoBack}) {
     const classes = useStyles();
-    const [drugs, addDrugs] = React.useState([{
-        index: Math.random(),
-        name: "",
-        author: "",
-        type: "",
-        dateOfPublish: "",
-        price: ""
-    }]);
-
-
     const {t, i18n} = useTranslation(['translation', 'common']);
 
     const heightUnits = [{value: 'cm',label: 'cm',}, {value: 'inch',label: 'inch',},{value: 'm',label: 'm',}];
@@ -115,32 +106,36 @@ function HealthStep({stepState, onSubmit}) {
     const [exclusions, setExclusions] = useState(extractExclusion(stepState));
     const [disabilities, setDisabilities] = useState(extractDisabilities(stepState));
 
-    const addnewdrug = () => {
-        const newElement = {}
-        console.log("before new drug added", drugs);
-        addDrugs(oldArray=> [...oldArray, newElement]);
-        console.log("after new drug added", drugs);
+    const addMedication = () => {
+        const newElement = {
+            index: Math.random(),
+            name: "",
+            author: "",
+            type: "",
+            dateOfPublish: "",
+            price: ""
+        }
+        setGeneralInfo(prevState=> ({...prevState, medication: [...prevState.medication, newElement]}));
     };
 
-    const removedrug = (event) => {        
-        const removeEl = event.currentTarget.getAttribute('id');
-        console.log("before new drug added", removeEl);
-        addDrugs(
-                drugs.filter((current, index, arr)=> {
-                    console.log("index", index);
-                    console.log("current", current);    
-                    return index != parseInt(removeEl)                    
-                    }
-                ))
-                
-        console.log("after new drug added", drugs);
+    const removeMedication = (medicationObj) => {  
+        console.log("filter...", medicationObj, generalInfo.medication, generalInfo.medication.filter(item=> item.index !== medicationObj.index))
+        setGeneralInfo(prevState=> ({...prevState, medication: prevState.medication.filter(item=> item.index !== medicationObj.index)}));   
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const formState = {...disabilities, ...reasons, ...exclusions, ...generalInfo}
-        onSubmit(formState);
+        onSubmit(formState, 3);
+    }
+
+    const stepBackHandler = (event) => {
+        event.preventDefault();
+        
+        const formState = {...disabilities, ...reasons, ...exclusions, ...generalInfo}
+        onGoBack(formState, 3);
+
     }
 
     return (
@@ -148,16 +143,16 @@ function HealthStep({stepState, onSubmit}) {
             <form action="#" onSubmit={handleSubmit} noValidate>
             <Grid container spacing={3}>
                 <Grid item className={classes.paper}>
-                    <p className="font-medium text-sm mb-4 uppercase text-gray-400"><Trans i18nKey='steps:healthStep.stepTopic'></Trans></p>
-                    <h2 className="font-large text-3xl mb-4 text-black-400"><Trans i18nKey='steps:healthStep.stepGreeting'></Trans></h2>
+                    <p className="font-medium text-md mb-4 uppercase text-gray-400"><Trans i18nKey='steps:healthStep.stepTopic'></Trans></p>
+                    <h2 className="font-medium text-4xl text-gray-700 mb-4"><Trans i18nKey='steps:healthStep.stepGreeting'></Trans></h2>
                 </Grid>
 
                 {/* about me section */}
                 <Grid item xs={12}>
-                     <p className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading2'></Trans></p>
+                     <p className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading2'></Trans></p>
                 </Grid>
                 <Grid item sm={6} xs={12}>
-                    <p className="font-medium text-sm mb-4 italic text-gray-400"><Trans i18nKey='steps:healthStep.heading2text'></Trans></p>
+                    <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:healthStep.heading2text'></Trans></p>
                 </Grid>   
                 <Grid item sm={12} xs={12}>
                 <div>
@@ -316,12 +311,12 @@ function HealthStep({stepState, onSubmit}) {
                 </Grid>  
                 <Grid item xs={12}>
                     <Grid item xs={12}>                        
-                        <h2 className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading3'></Trans></h2>
+                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading3'></Trans></h2>
                     </Grid>  
                     <Grid container xs={12}>   
                         <Grid item sm={6}>
-                            <p className="font-medium text-sm mb-4 italic text-grey-500"><Trans i18nKey='steps:healthStep.heading3text'></Trans></p>
-                            <p className="font-medium text-sm mb-4 italic text-grey-500"><Trans i18nKey='steps:healthStep.heading3compulsory'></Trans></p>
+                            <p className="font-medium text-md mb-4 italic text-grey-400"><Trans i18nKey='steps:healthStep.heading3text'></Trans></p>
+                            <p className="font-medium text-md mb-4 italic text-grey-400"><Trans i18nKey='steps:healthStep.heading3compulsory'></Trans></p>
                         </Grid>
                         <Grid item sm={6}>
                         <div>
@@ -394,11 +389,11 @@ function HealthStep({stepState, onSubmit}) {
                 {/* second page */}
                 <Grid container xs={12}>
                     <Grid item xs={12}>
-                        <h2 className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading4'></Trans></h2>
+                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading4'></Trans></h2>
                     </Grid>
                     <Grid container sm={12}>
                         <Grid item sm={6}>
-                            <p className="font-medium text-sm mb-4 italic text-grey-500"><Trans i18nKey='steps:healthStep.heading4text'></Trans></p>
+                            <p className="font-medium text-md mb-4 italic text-grey-400"><Trans i18nKey='steps:healthStep.heading4text'></Trans></p>
                         </Grid>
                         <Grid container sm={6}>
                             <Grid container sm={12}>
@@ -467,8 +462,8 @@ function HealthStep({stepState, onSubmit}) {
                 
                 <Grid container xs={12}>
                     <Grid item xs={12}>
-                        <h2 className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading5'></Trans></h2>
-                        <p className="font-medium text-sm mb-4 text-grey-500"><Trans i18nKey='steps:healthStep.heading5text1'></Trans></p>
+                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading5'></Trans></h2>
+                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading5text1'></Trans></p>
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item sm={6} xs={12}>
@@ -489,15 +484,15 @@ function HealthStep({stepState, onSubmit}) {
                                     value={disabilities.disabilityFoodDetail}
                                     onChange={event=> setDisabilities({...disabilities, disabilityFoodDetail: event.target.value})}
                                     multiline
-                                    disabled
                                     rows={7}
                                     fullWidth={true}
                                     variant="outlined"
+                                   
                                     />   
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                        <p className="font-medium text-sm mb-4 text-grey-500"><Trans i18nKey='steps:healthStep.heading5text2'></Trans></p>
+                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading5text2'></Trans></p>
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item  sm={6} xs={12}>
@@ -528,8 +523,8 @@ function HealthStep({stepState, onSubmit}) {
 
                 <Grid container xs={12}>
                     <Grid item xs={12}>
-                        <h2 className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading6'></Trans></h2>
-                        <p className="font-medium text-sm mb-4 text-grey-500"><Trans i18nKey='steps:healthStep.heading6text1'></Trans></p>
+                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading6'></Trans></h2>
+                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading6text1'></Trans></p>
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item sm={6} xs={12}>                        
@@ -557,7 +552,7 @@ function HealthStep({stepState, onSubmit}) {
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                        <p className="font-medium text-sm mb-4 text-grey-500"><Trans i18nKey='steps:healthStep.heading5text2'></Trans></p>
+                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading5text2'></Trans></p>
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item  sm={6} xs={12}>
@@ -589,28 +584,29 @@ function HealthStep({stepState, onSubmit}) {
                 
                     <Grid item xs={12}>
                         <Grid item xs={12}>
-                            <h2 className="font-medium text-sm mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading7'></Trans></h2>
+                            <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading7'></Trans></h2>
                         </Grid>
                         <Grid item xs={12}> 
-                            <p className="font-medium text-sm mb-4 text-grey-500"><Trans i18nKey='steps:healthStep.heading7text'></Trans></p>
+                            <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading7text'></Trans></p>
                         </Grid>
                         <Grid container xs={12}>
-                            <RadioGroup aria-label="gender" name="gender1" value={generalInfo.medicationGeneral} onChange={()=> setGeneralInfo({...disabilities, generalInfo: !disabilities.generalInfo})}>
+                            <RadioGroup aria-label="gender" name="gender1" value={generalInfo.medicationGeneral} onChange={()=> setGeneralInfo({...generalInfo, medicationGeneral: !generalInfo.medicationGeneral})}>
                                 <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.heading7check1Label'></Trans>}/>
                                 <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.heading7check2Label'></Trans>}/>
                             </RadioGroup>
                         </Grid>
-                        { generalInfo.medicationGeneral &&
-                        drugs.map((cur, i) => (
-                        <Grid container className="my-6 p-4 border border-blue-300 bg-blue-100 rounded" xs={12}  key={i}>
+                        
+                        { generalInfo.medicationGeneral && 
+                        generalInfo.medication.map((curr, i) => (                            
+                        <Grid container className="my-6 p-4 border border-blue-300 bg-blue-100 rounded" xs={12} key={curr.index}>
                                 <Grid container xs={12} spacing={1}>
                                     <Grid item xs={6}>
                                         <TextField
                                             id="outlined-multiline-static"
                                             label={<Trans i18nKey='steps:healthStep.forminpu1Label'></Trans>}
                                             placeholder={t("steps:healthStep.forminpu1Placeholder")}
-                                            value={disabilities.disabilityHelpDetail}
-                                            onChange={event=> setDisabilities({...disabilities, disabilityHelpDetail: event.target.value})}
+                                            value={curr.name}
+                                            // onChange={event=> setDisabilities({...disabilities, disabilityHelpDetail: event.target.value})}
                                             fullWidth={true}
                                             variant="filled"
                                             />  
@@ -626,7 +622,7 @@ function HealthStep({stepState, onSubmit}) {
                                             variant="filled"
                                         
                                         >
-                                        {medications.map((option) => (
+                                        {generalInfo.medication.map((option) => (
                                             <MenuItem key={option.value} value={option.value}>
                                             {option.label}
                                             </MenuItem>
@@ -634,7 +630,7 @@ function HealthStep({stepState, onSubmit}) {
                                         </TextField>
                                     </Grid>
                                     <Grid container xs={1} justify="flex-end" alignItems="center">
-                                        <DeleteForeverOutlinedIcon id={i}  onClick={removedrug} className="size-lg" />
+                                        <DeleteForeverOutlinedIcon onClick={() => removeMedication(curr)} className="size-lg" />
                                     </Grid>
                                 </Grid>
                                 
@@ -678,19 +674,21 @@ function HealthStep({stepState, onSubmit}) {
                                 </Grid>
                         </Grid>
                         ))}
-
-                        <Grid container xs={12} justify="center" alignItems="center">
-                            <Button variant="contained" color="primary" onClick={addnewdrug}>
-                                <Trans i18nKey='steps:healthStep.formaddbuttontext'></Trans>
-                            </Button>
-                        </Grid>
+                        {
+                            generalInfo.medicationGeneral && 
+                            <Grid container xs={12} justify="center" alignItems="center">
+                                <Button variant="contained" color="primary" onClick={addMedication}>
+                                    <Trans i18nKey='steps:healthStep.formaddbuttontext'></Trans>
+                                </Button>
+                            </Grid>
+                        }
                     </Grid>
                 
 
 
             <Grid container className="pt-6">
                 <Grid item xs={6}>
-                    <Button variant="contained" size="large" color="default">
+                    <Button variant="contained" size="large" color="default" onClick={stepBackHandler}>
                         <Trans i18nKey='steps:personalInformation.previous'></Trans>
                     </Button>
                 </Grid>

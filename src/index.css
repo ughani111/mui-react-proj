@@ -15,3 +15,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.MuiButton-containedSizeLarge {
+  padding: 10px 43px !important;
+}
+
+.MuiStep-completed,
+.text-blue-500 {
+  color: #4EA2D7;
+}
+.MuiPaper-root.MuiStepper-root.MuiStepper-horizontal > *:nth-last-child(1), 
+.MuiPaper-root.MuiStepper-root.MuiStepper-horizontal > *:nth-last-child(2) {
+  display: none;
+} 
+

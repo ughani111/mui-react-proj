@@ -49,8 +49,8 @@ function WelcomeStep({stepState, onSubmit}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        
-        onSubmit(formState);
+
+        onSubmit(formState, 0);
     }
 
     const handleRadioChange = (event) => {

@@ -4,7 +4,8 @@
     "personalInformation": "Personal Information",
     "visits": "Visits",
     "health": "Health",
-    "closing": "Closing"
+    "closing": "Closing",
+    "success": ""
   },
   "labels": {
     "language": "Language",

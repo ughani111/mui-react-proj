@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     )
 }
 
-function VisitStep({stepState, onSubmit}) {
+function VisitStep({stepState, onSubmit, onGoBack}) {
     
     const [formState, setFormState] = useState({
         talk: stepState.talk,
@@ -84,36 +84,43 @@ function VisitStep({stepState, onSubmit}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onSubmit(formState);
+        onSubmit(formState, 2);
+    }
+
+    const handleRadioChange = (state) => {
+        setFormState({
+        ...formState,
+        therapyType: state.target.value
+        })
+    }
+
+    const stepBackHandler = (event) => {
+        event.preventDefault();
+        
+        onGoBack(formState, 2);
+
     }
 
     return (
         <div className={classes.root}>
                 <p className="font-medium w-full text-sm mb-4 uppercase text-gray-400"><Trans i18nKey='steps:visitStep.stepTopic'></Trans></p>
-                <h2 className="font-large text-3xl mb-4 text-black-400"><Trans i18nKey='steps:visitStep.stepGreeting'></Trans></h2>
+                <h2 className="font-medium text-4xl text-gray-700 mb-4"><Trans i18nKey='steps:visitStep.stepGreeting'></Trans></h2>
                 <form className="mt-12 flex flex-col" onSubmit={handleSubmit} noValidate>
                     <div className="flex flex-row justify-between">
                         <RadioGroup classes={{root: classes.radioGroup}} className="w-full flex flex-row justify-between" aria-label="quiz" name="quiz" 
-                                    value={formState.therapyType} 
-                                    // onChange={
-                                    //     (state) => ({
-                                    //         ...state,
-                                    //         alreadyVisited: event.target.value === "true"
-                                    //     })
-                                    // }
-                                    /*onChange={event => setSetFormState({...formState, therapyType: event.target.value})}*/>
+                                  value={formState.therapyType}>
                             <div className="w-5/12">
-                                <FormControlLabel value="Fasten" control={<RadioWithImage imageUrl={image1Url} label={t('steps:visitStep.pic1Label')} />}/>
+                                <FormControlLabel value="Fasten" onChange={handleRadioChange} control={<RadioWithImage imageUrl={image1Url} label={t('steps:visitStep.pic1Label')} />}/>
                             </div>
 
                             <div className="w-5/12">
-                                <FormControlLabel value="Ernährung" control={<RadioWithImage imageUrl={image2Url} label={t('steps:visitStep.pic2Label')} />}/>
+                                <FormControlLabel value="Ernährung" onChange={handleRadioChange} control={<RadioWithImage imageUrl={image2Url} label={t('steps:visitStep.pic2Label')} />}/>
                             </div>
                         </RadioGroup>
                     </div>
-                    <p className="font-medium my-6 text-sm mb-4 italic text-gray-500"><Trans i18nKey='steps:visitStep.picturesDescription'></Trans></p>
+                    <p className="font-medium my-6 text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.picturesDescription'></Trans></p>
                     <p className="font-medium my-3 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading2'></Trans></p>
-                    <p className="font-medium w-3/4 my-3 text-sm mb-4 italic text-gray-500"><Trans i18nKey='steps:visitStep.heading2text'></Trans></p>
+                    <p className="font-medium w-3/4 my-3 text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.heading2text'></Trans></p>
                     <div>
                         <FormControlLabel
                             control={
@@ -140,12 +147,12 @@ function VisitStep({stepState, onSubmit}) {
                             label={<Trans i18nKey='steps:visitStep.dvdLabel'></Trans>}
                         />
                     </div>
-                    <div className="my-6 p-4 border border-blue-300 bg-blue-100 rounded">
+                    <div className="my-6 p-4 border border-blue-100 bg-gray-100 rounded">
                         <h2 className="text-black text-lg"><InfoOutlinedIcon className="text-blue-500" /> <span className="pl-1 text-blue-500"><Trans i18nKey='steps:visitStep.information'></Trans></span></h2>
                         <p className="ml-9"><Trans i18nKey='steps:visitStep.infotext'></Trans></p>
                     </div>
                     <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading3'></Trans></h2>
-                    <p className="font-medium text-sm mb-4 italic text-gray-500"><Trans i18nKey='steps:visitStep.heading3text'></Trans></p>
+                    <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.heading3text'></Trans></p>
                     <Grid container xs={12} className='my-12'>
                         <Grid item xs={5}>
                             <RadioGroup aria-label="gender" name="gender1" value={formState.talk} onChange={event=> setFormState({...formState, talk: event.target.value})}>
@@ -174,7 +181,7 @@ function VisitStep({stepState, onSubmit}) {
                     <Grid container xs={12} className='my-12'>
                         <Grid item xs={12}>
                             <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading4'></Trans></h2>
-                            <p className="font-medium text-sm mb-4 italic text-gray-500"><Trans i18nKey='steps:visitStep.heading4text'></Trans></p>
+                            <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.heading4text'></Trans></p>
                         </Grid>
                         {/* TODO */}
                         {/* value yet to be decided */}
@@ -185,7 +192,7 @@ function VisitStep({stepState, onSubmit}) {
                     </Grid>
                     <Grid container>
                         <Grid item xs={6}>
-                            <Button variant="contained" size="large" color="default">
+                            <Button variant="contained" size="large" color="default" onClick={stepBackHandler}>
                                 <Trans i18nKey='steps:personalInformation.previous'></Trans>
                             </Button>
                         </Grid>

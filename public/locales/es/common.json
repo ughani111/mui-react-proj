@@ -1,0 +1,14 @@
+{
+  "headings": {
+    "welcome": "grato",
+    "personalInformation": "Informacion personal",
+    "visits": "Visitas",
+    "health": "Salud",
+    "closing": "Clausura",
+    "success": ""
+  },
+  "labels": {
+    "language": "Idioma",
+    "fillRegistrationForm": "Complete el formulario de registro"
+  }
+}
