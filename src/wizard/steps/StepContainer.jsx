@@ -110,12 +110,15 @@ function StepCustomLabel({label, i18nLabel, stepIndex, active, isDone, onClick})
 }
 
 export default function StepContainer({ steps, onDone }) {
-    
+    const getLastState = JSON.parse(localStorage.getItem("diev_ls_willhami_curr_form_state"));
+    const getLastDoneState = JSON.parse(localStorage.getItem("diev_ls_willhami_curr_form_get_l_d_state"));
+    const getLastActiveStepState = JSON.parse(localStorage.getItem("diev_ls_willhami_curr_form_get_a_s_state"));
     const {t, i18n} = useTranslation(['common', 'steps']);
-    const [stepsState, setStepsState] = useState(initalState);
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [stepsState, setStepsState] = useState(getLastState || initalState);
+    console.log("stepsState after ls", stepsState);
+    const [activeStep, setActiveStep] = React.useState(getLastActiveStepState || 0);
     const [skipped, setSkipped] = React.useState(new Set());
-    const [doneState, setDoneState] = React.useState(steps.map(step => false));
+    const [doneState, setDoneState] = React.useState(getLastDoneState || steps.map(step => false));
     
 
     const isStepOptional = (step) => {
@@ -141,8 +144,19 @@ export default function StepContainer({ steps, onDone }) {
         setSkipped(newSkipped);
     };
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    const handleBack = (stepValue, stepIndex) => {
+        setStepsState((state) => ({
+            ...state,
+            [activeStep]: stepValue
+         }));
+ 
+ 
+        //  console.log(stepsState, stepIndex)
+ 
+        //  const updatedArray = [...doneState]        
+        //  updatedArray[stepIndex] = true;
+        //  setDoneState(() => updatedArray)
+         gotToStep(activeStep - 1);
     };
 
     const handleSkip = () => {
@@ -164,7 +178,7 @@ export default function StepContainer({ steps, onDone }) {
         setActiveStep(0);
     };
 
-    const handleStepSubmit = (stepValue, stepIndex) => {
+    const handleStepSubmit = async (stepValue, stepIndex) => {
         setStepsState((state) => ({
            ...state,
            [activeStep]: stepValue
@@ -176,18 +190,48 @@ export default function StepContainer({ steps, onDone }) {
         const updatedArray = [...doneState]        
         updatedArray[stepIndex] = true;
         setDoneState(() => updatedArray)
-        gotToStep(activeStep + 1);
+        
+
+  
+
 
         // TODO
-        // if(stepValue === lastStep){
-        //     onDone()
-        // }
+        const finalStep = 4;
+        if(stepIndex === finalStep){
+            const datatoPost = Object.assign(
+                {}, 
+                stepsState[0], 
+                stepsState[1], 
+                stepsState[2], 
+                stepsState[3], 
+                stepsState[4]
+            )
+            await onDone(datatoPost)
+            .then(msg => console.log(msg))
+            .fail(err=> console.log(err))
+
+            localStorage.removeItem('diev_ls_willhami_curr_form_get_l_d_state');
+        }
+
+        gotToStep(activeStep + 1);
 
         
     }
 
+    React.useEffect(() => {
+        localStorage.setItem("diev_ls_willhami_curr_form_state", JSON.stringify(stepsState));
+    }, [stepsState, doneState, activeStep]);
+
+    React.useEffect(() => {
+        localStorage.setItem("diev_ls_willhami_curr_form_get_l_d_state", JSON.stringify(doneState));
+    }, [stepsState, doneState, activeStep]);
+
+    React.useEffect(() => {
+        localStorage.setItem("diev_ls_willhami_curr_form_get_a_s_state", JSON.stringify(activeStep));
+    }, [stepsState, doneState, activeStep]);
+
     const StepRendererComponent = steps[activeStep].comp;
-    const stepProps = { stepState: stepsState[activeStep], onSubmit: handleStepSubmit }
+    const stepProps = { stepState: stepsState[activeStep], onSubmit: handleStepSubmit, onGoBack: handleBack }
 
     const classes = useStyles();
     return (

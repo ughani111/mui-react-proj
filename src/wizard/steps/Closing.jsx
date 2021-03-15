@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     }
  }
 
-function Closing({stepState, onSubmit}) {
+function Closing({stepState, onSubmit, onGoBack}) {
     const classes = useStyles();
     const {t, i18n} = useTranslation(['translation', 'common']);
 
@@ -61,6 +61,14 @@ function Closing({stepState, onSubmit}) {
         event.preventDefault();        
         onSubmit({...legalInfo}, 4);
     }
+    
+    const stepBackHandler = (event) => {
+        event.preventDefault();
+        
+        onGoBack({...legalInfo}, 4);
+
+    }
+
     return (
         <div className={classes.root}>
             <form action="#" onSubmit={handleSubmit} noValidate>
@@ -207,7 +215,7 @@ function Closing({stepState, onSubmit}) {
                     </Grid>
                     <Grid container className="pt-6">
                         <Grid item xs={6}>
-                            <Button variant="contained" size="large" color="default">
+                            <Button variant="contained" size="large" color="default" onClick={stepBackHandler}>
                                 <Trans i18nKey='steps:personalInformation.previous'></Trans>
                             </Button>
                         </Grid>

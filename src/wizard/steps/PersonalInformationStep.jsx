@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 
   
 
-function PersonalInformationStep({stepState, onSubmit}) {
+function PersonalInformationStep({stepState, onSubmit, onGoBack}) {
     const {t, i18n} = useTranslation(['translation', 'common']);
     
     const [personalInfo, setPersonalInfo] = useState(extractPersonalInfo(stepState));
@@ -94,6 +94,14 @@ function PersonalInformationStep({stepState, onSubmit}) {
 
         const formState = { ...personalInfo, ...addressInfo, ...languageInfo }
         onSubmit(formState, 1);
+    }
+
+    const stepBackHandler = (event) => {
+        event.preventDefault();
+
+        const formState = { ...personalInfo, ...addressInfo, ...languageInfo }
+        onGoBack(formState, 1);
+
     }
 
     return (
@@ -403,7 +411,7 @@ function PersonalInformationStep({stepState, onSubmit}) {
             </Grid>
             <Grid container>
                 <Grid item xs={6}>
-                    <Button variant="contained" size="large" color="default">
+                    <Button variant="contained" size="large" color="default" onClick={stepBackHandler}>
                         <Trans i18nKey='steps:personalInformation.previous'></Trans>
                     </Button>
                 </Grid>

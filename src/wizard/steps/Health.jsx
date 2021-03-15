@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
    }
 
 
-function HealthStep({stepState, onSubmit}) {
+function HealthStep({stepState, onSubmit, onGoBack}) {
     const classes = useStyles();
     const {t, i18n} = useTranslation(['translation', 'common']);
 
@@ -129,6 +129,15 @@ function HealthStep({stepState, onSubmit}) {
         const formState = {...disabilities, ...reasons, ...exclusions, ...generalInfo}
         onSubmit(formState, 3);
     }
+
+    const stepBackHandler = (event) => {
+        event.preventDefault();
+        
+        const formState = {...disabilities, ...reasons, ...exclusions, ...generalInfo}
+        onGoBack(formState, 3);
+
+    }
+
     return (
         <div className={classes.root}>
             <form action="#" onSubmit={handleSubmit} noValidate>
@@ -679,7 +688,7 @@ function HealthStep({stepState, onSubmit}) {
 
             <Grid container className="pt-6">
                 <Grid item xs={6}>
-                    <Button variant="contained" size="large" color="default">
+                    <Button variant="contained" size="large" color="default" onClick={stepBackHandler}>
                         <Trans i18nKey='steps:personalInformation.previous'></Trans>
                     </Button>
                 </Grid>

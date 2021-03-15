@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     )
 }
 
-function VisitStep({stepState, onSubmit}) {
+function VisitStep({stepState, onSubmit, onGoBack}) {
     
     const [formState, setFormState] = useState({
         talk: stepState.talk,
@@ -92,6 +92,13 @@ function VisitStep({stepState, onSubmit}) {
         ...formState,
         therapyType: state.target.value
         })
+    }
+
+    const stepBackHandler = (event) => {
+        event.preventDefault();
+        
+        onGoBack(formState, 2);
+
     }
 
     return (
@@ -185,7 +192,7 @@ function VisitStep({stepState, onSubmit}) {
                     </Grid>
                     <Grid container>
                         <Grid item xs={6}>
-                            <Button variant="contained" size="large" color="default">
+                            <Button variant="contained" size="large" color="default" onClick={stepBackHandler}>
                                 <Trans i18nKey='steps:personalInformation.previous'></Trans>
                             </Button>
                         </Grid>
