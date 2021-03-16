@@ -198,15 +198,9 @@ export default function StepContainer({ steps, onDone }) {
         // TODO
         const finalStep = 4;
         if(stepIndex === finalStep){
-            const datatoPost = Object.assign(
-                {}, 
-                stepsState[0], 
-                stepsState[1], 
-                stepsState[2], 
-                stepsState[3], 
-                stepsState[4]
-            )
-            await onDone(datatoPost)
+            const postBody = new Array(5).fill(undefined).reduce((acc, cur, index) => ({...acc, ...stepsState[index]}), {});
+
+            await onDone(postBody)
             .then(msg => console.log(msg))
             .fail(err=> console.log(err))
 
