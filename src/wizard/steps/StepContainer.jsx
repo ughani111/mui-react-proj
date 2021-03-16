@@ -66,10 +66,12 @@ const initalState = {
         medication: [{
             index: Math.random(),
             name: "",
-            author: "",
-            type: "",
-            dateOfPublish: "",
-            price: ""
+            agent: "",
+            daily_dosage: "",
+            dosage_morning: "",
+            dosage_noon: "",
+            dosage_evening: "",
+            dosage_night: ""
         }],
         disabilityFood: false,
         disabilityFoodDetail: "",
@@ -83,6 +85,8 @@ const initalState = {
         height: 0
     },
     4: {
+        referrer: '',
+        referrerDetail: '',
         legalAGB: false,
         legalPrivacy: false,
         legalMarketing: false,
@@ -198,12 +202,8 @@ export default function StepContainer({ steps, onDone }) {
         // TODO
         const finalStep = 4;
         if(stepIndex === finalStep){
+
             const postBody = new Array(5).fill(undefined).reduce((acc, cur, index) => ({...acc, ...stepsState[index]}), {});
-
-            await onDone(postBody)
-            .then(msg => console.log(msg))
-            .fail(err=> console.log(err))
-
             localStorage.removeItem('diev_ls_willhami_curr_form_get_l_d_state');
         }
 

@@ -149,10 +149,10 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
 
                 {/* about me section */}
                 <Grid item xs={12}>
-                     <p className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading2'></Trans></p>
+                     <p className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading_motivation'></Trans></p>
                 </Grid>
                 <Grid item sm={6} xs={12}>
-                    <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:healthStep.heading2text'></Trans></p>
+                    <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:healthStep.text_motivation'></Trans></p>
                 </Grid>   
                 <Grid item sm={12} xs={12}>
                 <div>
@@ -165,7 +165,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 color="primary"
                             />
                         }
-                        label={<Trans i18nKey='steps:healthStep.h2check1label'></Trans>}
+                        label={<Trans i18nKey='steps:healthStep.label_prevention'></Trans>}
                     />
                 </div>
                 <div>
@@ -178,7 +178,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 color="primary"
                             />
                         }
-                        label={<Trans i18nKey='steps:healthStep.h2check2label'></Trans>}
+                        label={<Trans i18nKey='steps:healthStep.label_regeneration'></Trans>}
                     />
                 </div>
                 <div>
@@ -191,7 +191,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 color="primary"
                             />
                         }
-                        label={<Trans i18nKey='steps:healthStep.h2check3label'></Trans>}
+                        label={<Trans i18nKey='steps:healthStep.label_weight_reduction'></Trans>}
                     />
                 </div>
                 <div>
@@ -204,7 +204,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 color="primary"
                             />
                         }
-                        label={<Trans i18nKey='steps:healthStep.h2check4label'></Trans>}
+                        label={<Trans i18nKey='steps:healthStep.label_smoking_cesssation'></Trans>}
                     />
                 </div>
                 <div>
@@ -217,7 +217,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 color="primary"
                             />
                         }
-                        label={<Trans i18nKey='steps:healthStep.h2check5label'></Trans>}
+                        label={<Trans i18nKey='steps:healthStep.label_acute_illness'></Trans>}
                     />
                 </div>
                 { 
@@ -227,8 +227,8 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                         <Grid item xs={6}>
                             <TextField
                                 id="outlined-multiline-static"
-                                label={<Trans i18nKey='steps:healthStep.h2check5label1'></Trans>}
-                                placeholder={t("steps:healthStep.h2check5placeholder1")}
+                                label={<Trans i18nKey='steps:healthStep.label_diagnosis'></Trans>}
+                                placeholder={t("steps:healthStep.placeholder_how_diagnosis")}
                                 value={reasons.reasonAcuteDetail}
                                 onChange={()=> setReasons({...reasons, reasonAcuteDetail: !reasons.reasonAcuteDetail})}
                                 fullWidth={true}
@@ -248,7 +248,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 color="primary"
                             />
                         }
-                        label={<Trans i18nKey='steps:healthStep.h2check6label'></Trans>}
+                        label={<Trans i18nKey='steps:healthStep.heading_chronic_disease'></Trans>}
                     />
                 </div>
                 <div>
@@ -261,7 +261,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 color="primary"
                             />
                         }
-                        label={<Trans i18nKey='steps:healthStep.h2check7label'></Trans>}
+                        label={<Trans i18nKey='steps:healthStep.heading_muscular_disorder'></Trans>}
                     />
                 </div>
                 { 
@@ -271,8 +271,8 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                         <Grid item xs={6}>
                             <TextField
                                 id="outlined-multiline-static"
-                                label={<Trans i18nKey='steps:healthStep.h2check5input1'></Trans>}
-                                placeholder={t("steps:healthStep.h2check5input1placeholder")}
+                                label={<Trans i18nKey='steps:healthStep.label_diagnosis'></Trans>}
+                                placeholder={t("steps:healthStep.placeholder_how_diagnosis")}
                                 value={reasons.reasonLocomotiveDetail}
                                 onChange={(event)=> setReasons({...reasons, reasonLocomotiveDetail: event.target.value})}
                                 fullWidth={true}
@@ -292,7 +292,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 color="primary"
                             />
                         }
-                        label={<Trans i18nKey='steps:healthStep.h2check8label'></Trans>}
+                        label={<Trans i18nKey='steps:healthStep.label_digestive_disease'></Trans>}
                     />
                 </div>
                 {/* <div>
@@ -305,18 +305,18 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 color="primary"
                             />
                         }
-                        label={<Trans i18nKey='steps:healthStep.h2check9label'></Trans>}
+                        label={<Trans i18nKey='steps:healthStep.lable_next'></Trans>}
                     />
                 </div> */}
                 </Grid>  
                 <Grid item xs={12}>
                     <Grid item xs={12}>                        
-                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading3'></Trans></h2>
+                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading_disease'></Trans></h2>
                     </Grid>  
                     <Grid container xs={12}>   
                         <Grid item sm={6}>
-                            <p className="font-medium text-md mb-4 italic text-grey-400"><Trans i18nKey='steps:healthStep.heading3text'></Trans></p>
-                            <p className="font-medium text-md mb-4 italic text-grey-400"><Trans i18nKey='steps:healthStep.heading3compulsory'></Trans></p>
+                            <p className="font-medium text-md mb-4 italic text-grey-400"><Trans i18nKey='steps:healthStep.text_select_disease'></Trans></p>
+                            <p className="font-medium text-md mb-4 italic text-grey-400"><Trans i18nKey='steps:healthStep.heading_fasting'></Trans></p>
                         </Grid>
                         <Grid item sm={6}>
                         <div>
@@ -329,7 +329,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                         color="primary"
                                     />
                                 }
-                                label={<Trans i18nKey='steps:healthStep.h3check1label'></Trans>}
+                                label={<Trans i18nKey='steps:healthStep.label_diabetes_mellitus_1'></Trans>}
                             />
                         </div>
                         <div>
@@ -342,7 +342,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                         color="primary"
                                     />
                                 }
-                                label={<Trans i18nKey='steps:healthStep.h3check2label'></Trans>}
+                                label={<Trans i18nKey='steps:healthStep.label_acute_cancer'></Trans>}
                             />
                         </div>
                         <div>
@@ -355,7 +355,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                         color="primary"
                                     />
                                 }
-                                label={<Trans i18nKey='steps:healthStep.h3check3label'></Trans>}
+                                label={<Trans i18nKey='steps:healthStep.label_severe_substance_dependence'></Trans>}
                             />
                         </div>
                         <div>
@@ -368,7 +368,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                         color="primary"
                                     />
                                 }
-                                label={<Trans i18nKey='steps:healthStep.h3check4label'></Trans>}
+                                label={<Trans i18nKey='steps:healthStep.label_eating_disorder'></Trans>}
                             />
                         </div>
                         <div>
@@ -379,7 +379,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                         color="primary"
                                     />
                                 }
-                                label={<Trans i18nKey='steps:healthStep.h3check5label'></Trans>}
+                                label={<Trans i18nKey='steps:healthStep.label_none_of_the_above'></Trans>}
                             />
                         </div>
                     </Grid>
@@ -389,11 +389,11 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                 {/* second page */}
                 <Grid container xs={12}>
                     <Grid item xs={12}>
-                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading4'></Trans></h2>
+                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading_your_body'></Trans></h2>
                     </Grid>
                     <Grid container sm={12}>
                         <Grid item sm={6}>
-                            <p className="font-medium text-md mb-4 italic text-grey-400"><Trans i18nKey='steps:healthStep.heading4text'></Trans></p>
+                            <p className="font-medium text-md mb-4 italic text-grey-400"><Trans i18nKey='steps:healthStep.heading_advance_medical_information'></Trans></p>
                         </Grid>
                         <Grid container sm={6}>
                             <Grid container sm={12}>
@@ -401,8 +401,8 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                     <TextField
                                         className="w-full"
                                         id="outlined-required"
-                                        label={<Trans i18nKey='steps:healthStep.bodyheightLabel'></Trans>}
-                                        placeholder={t("steps:healthStep.bodyheightPlaceholder")}
+                                        label={<Trans i18nKey='steps:healthStep.label_body_height'></Trans>}
+                                        placeholder={t("steps:healthStep.placeholder_body_height")}
                                         value={generalInfo.height}
                                         onChange={(event)=> setGeneralInfo({...generalInfo, height: event.target.value})}
                                         variant="outlined"
@@ -413,7 +413,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                         className={classes.select}
                                         id="outlined-required"
                                         select
-                                        label={<Trans i18nKey='steps:healthStep.unitLabel'></Trans>}
+                                        label={<Trans i18nKey='steps:healthStep.label_unit'></Trans>}
                                         variant="outlined"
                                     
                                     >
@@ -430,8 +430,8 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                 <TextField
                                     className="w-full"
                                     id="outlined-required"
-                                    label={<Trans i18nKey='steps:healthStep.bodyweightLabel'></Trans>}
-                                    placeholder={t("steps:healthStep.bodyweightPlaceholder")}
+                                    label={<Trans i18nKey='steps:healthStep.label_body_weight'></Trans>}
+                                    placeholder={t("steps:healthStep.placeholder_body_weight")}
                                     value={generalInfo.weight}
                                     onChange={(event)=> setGeneralInfo({...generalInfo, weight: event.target.value})}
                                     variant="outlined"
@@ -442,7 +442,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                     className={classes.select}
                                     id="outlined-required"
                                     select
-                                    label={<Trans i18nKey='steps:healthStep.unitLabel'></Trans>}
+                                    label={<Trans i18nKey='steps:healthStep.label_unit'></Trans>}
                                     // value={height}
                                     // onChange={handleChange}
                                     variant="outlined"
@@ -462,25 +462,25 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                 
                 <Grid container xs={12}>
                     <Grid item xs={12}>
-                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading5'></Trans></h2>
-                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading5text1'></Trans></p>
+                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading_allergy'></Trans></h2>
+                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.text_food_allergey_suffering'></Trans></p>
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item sm={6} xs={12}>
                             <RadioGroup aria-label="gender" name="gender1" value={disabilities.disabilityFood} onChange={()=> setDisabilities({...disabilities, disabilityFood: !disabilities.disabilityFood})}>
                                 <div>
-                                    <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.noLabel'></Trans>}/>
+                                    <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_no'></Trans>}/>
                                 </div>
                                 <div>                         
-                                    <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.yesfollowLabel'></Trans>} />
+                                    <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_following'></Trans>} />
                                 </div>
                             </RadioGroup>
                         </Grid>
                         <Grid item sm={6} xs={12}>
                             <TextField
                                     id="outlined-multiline-static"
-                                    label={<Trans i18nKey='steps:healthStep.h5input1Label'></Trans>}
-                                    placeholder={t("steps:healthStep.h5input1Placeholder")}
+                                    label={<Trans i18nKey='steps:healthStep.label_following_food_allergy'></Trans>}
+                                    placeholder={t("steps:healthStep.placeholder_following_food_allergy")}
                                     value={disabilities.disabilityFoodDetail}
                                     onChange={event=> setDisabilities({...disabilities, disabilityFoodDetail: event.target.value})}
                                     multiline
@@ -492,24 +492,24 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading5text2'></Trans></p>
+                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading_drug_allergy'></Trans></p>
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item  sm={6} xs={12}>
                         <RadioGroup aria-label="gender" name="gender1" value={disabilities.disabilityMedAllergy} onChange={()=> setDisabilities({...disabilities, disabilityMedAllergy: !disabilities.disabilityMedAllergy})}>
                             <div>
-                                <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.noLabel'></Trans>}/>
+                                <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_no'></Trans>}/>
                             </div>
                             <div>                         
-                                <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.yesfollowLabel'></Trans>} />
+                                <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_following'></Trans>} />
                             </div>
                         </RadioGroup>
                         </Grid>
                         <Grid item  sm={6} xs={12}>
                             <TextField
                                 id="outlined-multiline-static"
-                                label={<Trans i18nKey='steps:healthStep.h5input2Label'></Trans>}
-                                placeholder={t("steps:healthStep.h5input2Placeholder")}
+                                label={<Trans i18nKey='steps:healthStep.label_drug_allergy'></Trans>}
+                                placeholder={t("steps:healthStep.placeholder_drug_allergy")}
                                 value={disabilities.disabilityMedAllergyDetail}
                                 onChange={event=> setDisabilities({...disabilities, disabilityMedAllergyDetail: event.target.value})}
                                 multiline
@@ -523,25 +523,25 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
 
                 <Grid container xs={12}>
                     <Grid item xs={12}>
-                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading6'></Trans></h2>
-                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading6text1'></Trans></p>
+                        <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading_support'></Trans></h2>
+                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.text_support'></Trans></p>
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item sm={6} xs={12}>                        
                             <RadioGroup aria-label="gender" name="gender1" value={disabilities.disabilityLocomotion} onChange={()=> setDisabilities({...disabilities, disabilityLocomotion: !disabilities.disabilityLocomotion})}>
                                 <div>
-                                    <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.noLabel'></Trans>}/>
+                                    <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_no'></Trans>}/>
                                 </div>
                                 <div>                         
-                                    <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.yesfollowLabel'></Trans>} />
+                                    <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_following'></Trans>} />
                                 </div>
                             </RadioGroup>
                         </Grid>
                         <Grid item sm={6} xs={12}>
                             <TextField
                                     id="outlined-multiline-static"
-                                    label={<Trans i18nKey='steps:healthStep.h6input1Label'></Trans>}
-                                    placeholder={t("steps:healthStep.h6input1Placeholder")}
+                                    label={<Trans i18nKey='steps:healthStep.label_restrictions'></Trans>}
+                                    placeholder={t("steps:healthStep.placeholder_restrictions")}
                                     value={disabilities.disabilityLocomotionDetail}
                                     onChange={event=> setDisabilities({...disabilities, disabilityLocomotionDetail: event.target.value})}
                                     multiline
@@ -552,24 +552,24 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading5text2'></Trans></p>
+                        <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading_drug_allergy'></Trans></p>
                     </Grid>
                     <Grid container xs={12}>
                         <Grid item  sm={6} xs={12}>
                         <RadioGroup aria-label="gender" name="gender1" value={disabilities.disabilityHelp} onChange={()=> setDisabilities({...disabilities, disabilityHelp: !disabilities.disabilityHelp})}>
                             <div>
-                                <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.noLabel'></Trans>}/>
+                                <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_no'></Trans>}/>
                             </div>
                             <div>                         
-                                <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.yesfollowLabel'></Trans>} />
+                                <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_following'></Trans>} />
                             </div>
                         </RadioGroup>
                         </Grid>
                         <Grid item  sm={6} xs={12}>
                             <TextField
                                 id="outlined-multiline-static"
-                                label={<Trans i18nKey='steps:healthStep.h5input2Label'></Trans>}
-                                placeholder={t("steps:healthStep.h5input2Placeholder")}
+                                label={<Trans i18nKey='steps:healthStep.label_drug_allergy'></Trans>}
+                                placeholder={t("steps:healthStep.placeholder_drug_allergy")}
                                 value={disabilities.disabilityHelpDetail}
                                 onChange={event=> setDisabilities({...disabilities, disabilityHelpDetail: event.target.value})}
                                 multiline
@@ -584,15 +584,15 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                 
                     <Grid item xs={12}>
                         <Grid item xs={12}>
-                            <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading7'></Trans></h2>
+                            <h2 className="font-medium text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:healthStep.heading_drugs'></Trans></h2>
                         </Grid>
                         <Grid item xs={12}> 
-                            <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.heading7text'></Trans></p>
+                            <p className="font-medium text-md mb-4 text-grey-400"><Trans i18nKey='steps:healthStep.text_drugs'></Trans></p>
                         </Grid>
                         <Grid container xs={12}>
                             <RadioGroup aria-label="gender" name="gender1" value={generalInfo.medicationGeneral} onChange={()=> setGeneralInfo({...generalInfo, medicationGeneral: !generalInfo.medicationGeneral})}>
-                                <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.heading7check1Label'></Trans>}/>
-                                <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.heading7check2Label'></Trans>}/>
+                                <FormControlLabel value={false} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_do_not_avoid'></Trans>}/>
+                                <FormControlLabel value={true} control={<Radio />} label={<Trans i18nKey='steps:healthStep.label_follwing_drugs'></Trans>}/>
                             </RadioGroup>
                         </Grid>
                         
@@ -603,8 +603,8 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                     <Grid item xs={6}>
                                         <TextField
                                             id="outlined-multiline-static"
-                                            label={<Trans i18nKey='steps:healthStep.forminpu1Label'></Trans>}
-                                            placeholder={t("steps:healthStep.forminpu1Placeholder")}
+                                            label={<Trans i18nKey='steps:healthStep.label_name_the_drug'></Trans>}
+                                            placeholder={t("steps:healthStep.placeholder_drug_name")}
                                             value={curr.name}
                                             // onChange={event=> setDisabilities({...disabilities, disabilityHelpDetail: event.target.value})}
                                             fullWidth={true}
@@ -616,13 +616,13 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                             className={classes.select}
                                             id="outlined-multiline-static"
                                             select
-                                            label={<Trans i18nKey='steps:healthStep.forminpu2Label'></Trans>}
-                                            // value={height}
+                                            label={<Trans i18nKey='steps:healthStep.label_type_of_drug'></Trans>}
+                                            value={curr.agent}
                                             // onChange={handleChange}
                                             variant="filled"
                                         
                                         >
-                                        {generalInfo.medication.map((option) => (
+                                        {medications.map((option) => (
                                             <MenuItem key={option.value} value={option.value}>
                                             {option.label}
                                             </MenuItem>
@@ -638,36 +638,40 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                                     <Grid item sm={3} xs={6}>
                                         <TextField
                                             id="outlined-multiline-static"
-                                            label={<Trans i18nKey='steps:healthStep.forminpu3Label'></Trans>}
-                                            placeholder={t("steps:healthStep.forminpu3Placeholder")}
+                                            label={<Trans i18nKey='steps:healthStep.label_morning_diagnosis'></Trans>}
+                                            placeholder={t("steps:healthStep.placeholder_doses")}
                                             fullWidth={true}
+                                            value={curr.dosage_morning}
                                             variant="filled"
                                             />  
                                     </Grid>
                                     <Grid item sm={3} xs={6}>
                                         <TextField
                                             id="outlined-multiline-static"
-                                            label={<Trans i18nKey='steps:healthStep.forminpu4Label'></Trans>}
-                                            placeholder={t("steps:healthStep.forminpu4Placeholder")}
+                                            label={<Trans i18nKey='steps:healthStep.label_afternoon_diagnosis'></Trans>}
+                                            placeholder={t("steps:healthStep.placeholder_doses")}
                                             fullWidth={true}
+                                            value={curr.dosage_noon}
                                             variant="filled"
                                             />  
                                     </Grid>
                                     <Grid item sm={3} xs={6}>
                                         <TextField
                                             id="outlined-multiline-static"
-                                            label={<Trans i18nKey='steps:healthStep.forminpu5Label'></Trans>}
-                                            placeholder={t("steps:healthStep.forminpu5Placeholder")}
+                                            label={<Trans i18nKey='steps:healthStep.label_evening_diagnosis'></Trans>}
+                                            placeholder={t("steps:healthStep.placeholder_doses")}
                                             fullWidth={true}
+                                            value={curr.dosage_evening}
                                             variant="filled"
                                             />  
                                     </Grid>
                                     <Grid item sm={3} xs={6}>
                                         <TextField
                                             id="outlined-multiline-static"
-                                            label={<Trans i18nKey='steps:healthStep.forminpu6Label'></Trans>}
-                                            placeholder={t("steps:healthStep.forminpu6Placeholder")}
+                                            label={<Trans i18nKey='steps:healthStep.label_night_diagnosis'></Trans>}
+                                            placeholder={t("steps:healthStep.placeholder_doses")}
                                             fullWidth={true}
+                                            value={curr.dosage_night}
                                             variant="filled"
                                             />  
                                     </Grid>
@@ -678,7 +682,7 @@ function HealthStep({stepState, onSubmit, onGoBack}) {
                             generalInfo.medicationGeneral && 
                             <Grid container xs={12} justify="center" alignItems="center">
                                 <Button variant="contained" color="primary" onClick={addMedication}>
-                                    <Trans i18nKey='steps:healthStep.formaddbuttontext'></Trans>
+                                    <Trans i18nKey='steps:healthStep.text_add_more_button'></Trans>
                                 </Button>
                             </Grid>
                         }
