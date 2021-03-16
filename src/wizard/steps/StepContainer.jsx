@@ -202,15 +202,8 @@ export default function StepContainer({ steps, onDone }) {
         // TODO
         const finalStep = 4;
         if(stepIndex === finalStep){
-            const datatoPost = Object.assign(
-                {}, 
-                stepsState[0], 
-                stepsState[1], 
-                stepsState[2], 
-                stepsState[3], 
-                stepsState[4]
-            )
 
+            const postBody = new Array(5).fill(undefined).reduce((acc, cur, index) => ({...acc, ...stepsState[index]}), {});
             localStorage.removeItem('diev_ls_willhami_curr_form_get_l_d_state');
         }
 
