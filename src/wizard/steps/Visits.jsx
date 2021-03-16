@@ -119,8 +119,8 @@ function VisitStep({stepState, onSubmit, onGoBack}) {
                         </RadioGroup>
                     </div>
                     <p className="font-medium my-6 text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.picturesDescription'></Trans></p>
-                    <p className="font-medium my-3 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading2'></Trans></p>
-                    <p className="font-medium w-3/4 my-3 text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.heading2text'></Trans></p>
+                    <p className="font-medium my-3 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading_further_services'></Trans></p>
+                    <p className="font-medium w-3/4 my-3 text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.text_further_services'></Trans></p>
                     <div>
                         <FormControlLabel
                             control={
@@ -131,7 +131,7 @@ function VisitStep({stepState, onSubmit, onGoBack}) {
                                     color="primary"
                                 />
                             }
-                            label={<Trans i18nKey='steps:visitStep.tvLabel'></Trans>}
+                            label={<Trans i18nKey='steps:visitStep.label_tv'></Trans>}
                         />
                     </div>
                     <div>
@@ -144,29 +144,29 @@ function VisitStep({stepState, onSubmit, onGoBack}) {
                                     color="primary"
                                 />
                             }
-                            label={<Trans i18nKey='steps:visitStep.dvdLabel'></Trans>}
+                            label={<Trans i18nKey='steps:visitStep.label_dvd'></Trans>}
                         />
                     </div>
                     <div className="my-6 p-4 border border-blue-100 bg-gray-100 rounded">
-                        <h2 className="text-black text-lg"><InfoOutlinedIcon className="text-blue-500" /> <span className="pl-1 text-blue-500"><Trans i18nKey='steps:visitStep.information'></Trans></span></h2>
-                        <p className="ml-9"><Trans i18nKey='steps:visitStep.infotext'></Trans></p>
+                        <h2 className="text-black text-lg"><InfoOutlinedIcon className="text-blue-500" /> <span className="pl-1 text-blue-500"><Trans i18nKey='steps:visitStep.heading_information'></Trans></span></h2>
+                        <p className="ml-9"><Trans i18nKey='steps:visitStep.text_info'></Trans></p>
                     </div>
-                    <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading3'></Trans></h2>
-                    <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.heading3text'></Trans></p>
+                    <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading_own_contribution'></Trans></h2>
+                    <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.text_own_contribution'></Trans></p>
                     <Grid container xs={12} className='my-12'>
                         <Grid item xs={5}>
                             <RadioGroup aria-label="gender" name="gender1" value={formState.talk} onChange={event=> setFormState({...formState, talk: event.target.value})}>
-                                <FormControlLabel value="yes" control={<Radio />} label={<Trans i18nKey='steps:visitStep.yes'></Trans>} />
-                                <FormControlLabel value="no" control={<Radio />} label={<Trans i18nKey='steps:visitStep.no'></Trans>} />
-                                <FormControlLabel value="maybe" control={<Radio />} label={<Trans i18nKey='steps:visitStep.maybe'></Trans>} />
+                                <FormControlLabel value="yes" control={<Radio />} label={<Trans i18nKey='steps:visitStep.label_yes'></Trans>} />
+                                <FormControlLabel value="no" control={<Radio />} label={<Trans i18nKey='steps:visitStep.label_no'></Trans>} />
+                                <FormControlLabel value="maybe" control={<Radio />} label={<Trans i18nKey='steps:visitStep.label_maybe'></Trans>} />
                             </RadioGroup>
                         </Grid>
 
                         <Grid item xs={7}>
                         <TextField
                             id="outlined-multiline-static"
-                            label={<Trans i18nKey='steps:visitStep.messageLabel'></Trans>}
-                            placeholder={t("steps:visitStep.messagePlaceholder")}
+                            label={<Trans i18nKey='steps:visitStep.label_message'></Trans>}
+                            placeholder={t("steps:visitStep.placeholder_message")}
                             value={formState.talkDetail}
                             onChange={event=>setFormState({...formState, talkDetail: event.target.value})}
                             multiline
@@ -180,25 +180,25 @@ function VisitStep({stepState, onSubmit, onGoBack}) {
                     
                     <Grid container xs={12} className='my-12'>
                         <Grid item xs={12}>
-                            <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading4'></Trans></h2>
-                            <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.heading4text'></Trans></p>
+                            <h2 className="font-medium my-6 text-md mb-4 uppercase text-blue-500"><Trans i18nKey='steps:visitStep.heading_therapy_planning'></Trans></h2>
+                            <p className="font-medium text-md mb-4 italic text-gray-400"><Trans i18nKey='steps:visitStep.text_therapy_planning'></Trans></p>
                         </Grid>
                         {/* TODO */}
                         {/* value yet to be decided */}
                         <RadioGroup aria-label="gender" name="gender1" /*value={value} onChange={handleChange}*/>
-                            <FormControlLabel value="yes" control={<Radio />} label={<Trans i18nKey='steps:visitStep.yes'></Trans>} />
-                            <FormControlLabel value="no" control={<Radio />} label={<Trans i18nKey='steps:visitStep.no'></Trans>} />
+                            <FormControlLabel value="yes" control={<Radio />} label={<Trans i18nKey='steps:visitStep.label_yes'></Trans>} />
+                            <FormControlLabel value="no" control={<Radio />} label={<Trans i18nKey='steps:visitStep.label_no'></Trans>} />
                         </RadioGroup>
                     </Grid>
                     <Grid container>
                         <Grid item xs={6}>
                             <Button variant="contained" size="large" color="default" onClick={stepBackHandler}>
-                                <Trans i18nKey='steps:personalInformation.previous'></Trans>
+                                <Trans i18nKey='steps:visitStep.button_previous'></Trans>
                             </Button>
                         </Grid>
                         <Grid xs={6} container justify="flex-end">
                             <Button variant="contained" size="large" color="primary" type="submit">
-                                <Trans i18nKey='steps:personalInformation.next'></Trans>
+                                <Trans i18nKey='steps:visitStep.button_next'></Trans>
                             </Button>
                         </Grid>
                     </Grid>

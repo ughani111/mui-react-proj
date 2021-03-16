@@ -30,8 +30,8 @@ function SucessStep({stepState, onSubmit}) {
 
 
                 <div className="my-6 p-4 border border-blue-100 bg-gray-100 rounded">
-                    <h2 className="text-black text-lg"><InfoOutlinedIcon className="text-blue-500" /> <span className="pl-1 text-blue-500"><Trans i18nKey='steps:successStep.heading2'></Trans></span></h2>
-                    <p className="ml-9"><Trans i18nKey='steps:successStep.heading2text'></Trans></p>
+                    <h2 className="text-black text-lg"><InfoOutlinedIcon className="text-blue-500" /> <span className="pl-1 text-blue-500"><Trans i18nKey='steps:successStep.heading_information'></Trans></span></h2>
+                    <p className="ml-9"><Trans i18nKey='steps:successStep.text_information'></Trans></p>
                 </div>
 
                 <div>                   
